@@ -1,0 +1,163 @@
+IF
+  Die()  
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateVisualEffectObject("DDOORH",Myself)
+	DestroySelf()
+END
+
+IF
+  Global("SPAWN","LOCALS",0)
+  !Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #100
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+// Wurftränke
+
+IF
+  Global("SPAWN","LOCALS",0)
+  OR(2)
+  Name("NQ#GB01",Myself)
+  Name("NQ#GB03",Myself)
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #100
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+	
+    GiveItemCreate("NQ#MI47",Myself,1,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON2,EQUIP)
+	FillSlot(SLOT_WEAPON2)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))	
+	
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+IF
+  Global("SPAWN","LOCALS",0)
+  OR(2)
+  Name("NQ#GB02",Myself)
+  Name("NQ#GB04",Myself)
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #34
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+    GiveItemCreate("NQ#MI47",Myself,1,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON2,EQUIP)
+	FillSlot(SLOT_WEAPON2)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))		
+	CreateVisualEffectObject("ABJURH",Myself)
+  RESPONSE #33
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+    GiveItemCreate("NQ#MI47",Myself,2,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON2,EQUIP)
+	FillSlot(SLOT_WEAPON2)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))		
+	CreateVisualEffectObject("ABJURH",Myself)
+  RESPONSE #33
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+    GiveItemCreate("NQ#MI47",Myself,3,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON2,EQUIP)
+	FillSlot(SLOT_WEAPON2)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))		
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+IF
+  Global("SPAWN","LOCALS",0)
+  Name("NQ#GB18",Myself)
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #50
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+    GiveItemCreate("NQ#MI47",Myself,2,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON1,EQUIP)
+	FillSlot(SLOT_WEAPON1)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))		
+	CreateVisualEffectObject("ABJURH",Myself)
+  RESPONSE #50
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+    GiveItemCreate("NQ#MI47",Myself,3,0,0)
+    XEquipItem("NQ#MI47",Myself,SLOT_WEAPON1,EQUIP)
+	FillSlot(SLOT_WEAPON1)
+    ActionOverride(Myself,SelectWeaponAbility(SLOT_WEAPON,0))		
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+IF
+  Global("SPAWN","LOCALS",0)
+  !Name("NQ#GB01",Myself)
+  !Name("NQ#GB02",Myself) 
+  !Name("NQ#GB03",Myself)
+  !Name("NQ#GB04",Myself) 
+  !Name("NQ#GB17",Myself)
+  !Name("NQ#GB18",Myself)
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #50
+  	SetGlobalTimer("SPAWNTIME","LOCALS",120)
+    SetGlobal("SPAWN","LOCALS",1)
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+//
+
+IF
+  Global("SPAWN","LOCALS",1)
+  GlobalTimerExpired("SPAWNTIME","LOCALS")
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	SetGlobal("SPAWN","LOCALS",2)
+	CreateVisualEffectObject("ABJURH",Myself)
+END
+
+IF
+  Global("SPAWN","LOCALS",2)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("DDOORH",Myself)
+	DestroySelf()
+END
+
+// Paek Skill
+
+IF
+  Name("NQ#GB17",Myself)
+  Global("NQ#BAR2","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#BAR2","NQ#GB17",0,0,0)						// Explosives Fass
+    ActionOverride("NQ#BAR2", CreateVisualEffectObject("ABJURH",Myself))
+	SetGlobal("NQ#BAR2","GLOBAL",0)
+END
+
+// Raki Skill
+
+IF
+  Name("NQ#GB18",Myself)
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPCL321")
+  Global("Angry","LOCALS",0)
+  OR(2)
+   Global("NQ#SHUKTACTICS","GLOBAL",0)
+   Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SpellRES("SPCL321", Myself)
+	SetGlobal("Angry","LOCALS",1)
+	SetInterrupt(TRUE)
+END
+

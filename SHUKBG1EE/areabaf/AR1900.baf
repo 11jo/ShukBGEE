@@ -1,0 +1,21 @@
+// Global("NQ#WARASSPAWN","GLOBAL",1)			Räuberlager (EE: AR1900)
+// Global("NQ#WARASSPAWN","GLOBAL",2)			Tempel
+// Global("NQ#WARASSPAWN","GLOBAL",3)			Leuchturm (Spawn durch baldurs.bcs)
+
+IF
+  Global("NQ#WARASSPAWN","GLOBAL",0)					// Kein Spawn
+  PartyHasItem("NQ#SHUK")								// Goblinstein im Besitz
+  CheckStatGT(Player1,5,Level)							// Level Player1 mindestens 6
+  Global("NQ#WARAS","GLOBAL",0)							// Kein Gespräch mit Waras geführt
+THEN
+  RESPONSE #100
+    PlaySound("WWOLF03")
+    CreateCreature("NQ#WARAS",[3208.3089],4)			// WARAS
+	CreateCreature("NQ#NARTZ",[3127.3068],0)			// NARTZ
+	CreateCreature("NQ#BD13",[3123.3452],8)				// Toter Bandit
+	CreateCreature("NQ#BD13",[3121.3258],10)			// Toter Bandit
+	CreateCreature("NQ#BD13",[3045.3087],12)			// Toter Bandit
+	DisplayString(Player1,@8503)						// Als Ihr das Gebiet betretet hört Ihr ein schauriges Geheul. In der Nähe scheint sich ein verletzter Wolf oder eine noch gefährlichere Wolfskreatur zu befinden.
+	AddJournalEntry(@70003,QUEST)						// Ein schauriges Geheul - Ich habe aus den Wäldern im Süden des Räuberlager das Geheul einer verletzten Wolfkreatur gehört.
+    SetGlobal("NQ#WARASSPAWN","GLOBAL",1)				// Spawn Räuberlager aktiv
+END

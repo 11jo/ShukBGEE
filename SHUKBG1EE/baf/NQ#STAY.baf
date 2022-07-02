@@ -1,0 +1,201 @@
+IF
+  Global("NQ#SHUKRATCHILD","GLOBAL",666)
+  !Name("NQ#GB10",Myself)
+  !Name("NQ#GB28",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)
+	DestroySelf()
+END
+
+IF
+  !AreaCheck("AR0225")
+  !Name("NQ#GB28",Myself)
+THEN
+  RESPONSE #100
+    EscapeAreaMove("AR0225",2066,2055,14)
+END
+
+IF
+  Name("NQ#GB10",Myself)
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",0)
+THEN
+  RESPONSE #100
+    SaveLocation("LOCALS","MYPOINT",[2113.1883])
+	SetGlobal("HERE","LOCALS",1)
+	ReallyForceSpellRES("NQ#ORH",Myself)
+    Continue()
+END
+
+IF
+  Name("NQ#GB28",Myself)
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",0)
+THEN
+  RESPONSE #100
+    SaveLocation("LOCALS","MYPOINT",[2422.1908])
+	SetGlobal("HERE","LOCALS",1)
+	ReallyForceSpellRES("NQ#ORH",Myself)
+    Continue()
+END
+
+IF
+  !Name("NQ#GB10",Myself)
+  !Name("NQ#GB28",Myself)
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",0)
+THEN
+  RESPONSE #100
+    SaveObjectLocation("LOCALS","MYPOINT",Myself)
+	SetGlobal("HERE","LOCALS",1)
+	ReallyForceSpellRES("NQ#ORH",Myself)
+    Continue()
+END
+
+IF
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",1)
+  !NearSavedLocation(Myself,"MYPOINT",3)
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !See(Nearestenemyof(Myself))
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    MoveToSavedLocation("MYPOINT","LOCALS")
+    Continue()
+END
+
+//
+
+IF
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Enemy()
+END
+
+//
+
+IF
+  Allegiance(Myself,ENEMY)
+  Name("NQ#GB24",Myself)
+  Global("STUFF","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateItem("ax1h01",1,0,0)
+    CreateItem("shld03",1,0,0)
+    SetGlobal("STUFF","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Name("NQ#GB25",Myself)
+  Global("STUFF","LOCALS",0)
+THEN
+  RESPONSE #100
+    CreateItem("bow05",1,0,0)
+	CreateItem("dagg01",1,0,0)
+	CreateItem("arow01",20,0,0)
+    SetGlobal("STUFF","LOCALS",1)
+END
+
+// Unsterblichkeit
+
+IF
+  !Allegiance(Myself,GOODBUTBLUE)
+  !Allegiance(Myself,NEUTRAL)
+  HasItem("MINHP1",Myself)
+  Global("MORTAL","LOCALS",0)
+THEN
+  RESPONSE #100
+    DestroyItem("MINHP1")
+	SetGlobal("MORTAL","LOCALS",1)
+    Enemy()
+END
+
+// Bewusstlosigkeit
+
+IF
+  Allegiance(Myself,GOODBUTBLUE)
+  Global("MORTAL","LOCALS",0)
+  Global("KO","LOCALS",0)
+  HPLT(Myself,2)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    MakeUnselectable(5000)
+    ChangeEnemyAlly(Myself,NEUTRAL)
+//    PlayDeadInterruptible(9999)
+    SetSequence(SEQ_DIE)
+    SetGlobalTimer("IMKO","LOCALS",30)
+	SetGlobal("KO","LOCALS",1)
+END
+
+IF
+  Global("KO","LOCALS",1)
+  GlobalTimerExpired("IMKO","LOCALS")
+  !Detect(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    MakeUnselectable(0)
+    ChangeEnemyAlly(Myself,GOODBUTBLUE)
+    SetSequence(SEQ_AWAKE)
+	SetGlobal("KO","LOCALS",0)
+END
+
+// Respawn
+
+IF
+  Die()
+  Allegiance(Myself,GOODBUTBLUE)
+  Name("NQ#GB24",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    CreateCreatureObject("NQ#GB24",Myself,0,0,0)
+	Kill(Myself)
+END
+
+IF
+  Die()
+  Allegiance(Myself,GOODBUTBLUE)
+  Name("NQ#GB25",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    CreateCreatureObject("NQ#GB25",Myself,0,0,0)
+	Kill(Myself)
+END
+
+IF
+  Die()
+  Global("IDIE","LOCALS",0)
+  !Allegiance(Myself,GOODBUTBLUE)
+  !Name("NQ#GB10",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    SetGlobal("IDIE","LOCALS",1)
+	IncrementGlobal("NQ#YOUKILLGOBS","GLOBAL",1)
+	Kill(Myself)
+END
+
+//  NQ#GB28
+
+IF
+  See(Nearestenemyof(Myself))
+  !ModalState(SHAMANDANCE)
+  !CheckSpellState(Myself,SHAMANIC_DANCE)
+THEN
+  RESPONSE #100
+    BattleSong()
+END
+
+
+
+
+

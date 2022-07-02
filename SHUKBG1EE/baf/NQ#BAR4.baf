@@ -1,0 +1,60 @@
+IF
+    Die()
+	Global("NQ#IZVO","GLOBAL",2)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+    CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	SetGlobal("NQ#IZVO","GLOBAL",3)
+    Kill(Myself)
+END
+
+IF
+    Die()
+	Global("NQ#IZVO","GLOBAL",3)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	SetGlobal("NQ#IZVO","GLOBAL",4)
+    Kill(Myself)
+END
+
+IF
+    Die()
+	Global("NQ#IZVO","GLOBAL",4)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+    CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	SetGlobal("NQ#IZVO","GLOBAL",5)
+    Kill(Myself)
+END
+
+IF
+    Die()
+	Global("NQ#IZVO","GLOBAL",5)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	SetGlobal("NQ#IZVO","GLOBAL",6)
+    Kill(Myself)
+END
+
+IF
+    Die()
+	Global("NQ#IZVO","GLOBAL",6)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+    CreateCreatureObject("NQ#CHI3",Myself,0,0,0)
+	CreateCreatureObject("NQ#CHI2",Myself,0,0,0)
+	SetGlobal("NQ#IZVO","GLOBAL",7)
+    Kill(Myself)
+END
+

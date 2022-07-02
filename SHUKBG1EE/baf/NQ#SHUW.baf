@@ -1,0 +1,43 @@
+	// WTASIGHT (Ohne ENEMY)
+
+IF
+  Heard([0],111)
+  OR(2)
+   Global("NQ#SHUKTACTICS","GLOBAL",0)
+   Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    MoveToObject(Nearestenemyof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  InWeaponRange(Lastseenby(Myself))
+  OR(2)
+   Global("NQ#SHUKTACTICS","GLOBAL",0)
+   Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+  InWeaponRange(Lastattackerof(Myself))
+  OR(2)
+   Global("NQ#SHUKTACTICS","GLOBAL",0)
+   Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  OR(2)
+   Global("NQ#SHUKTACTICS","GLOBAL",0)
+   Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    MoveToObject(Lastseenby(Myself))
+END

@@ -1,0 +1,16 @@
+IF
+  Die()
+  GlobalLT("NQ#CARRIO","GLOBAL",4)
+THEN
+  RESPONSE #100
+    IncrementGlobal("NQ#CARRIO","GLOBAL",1)
+END
+
+IF
+  Die()
+  Global("NQ#CARRIO","GLOBAL",4)
+THEN
+  RESPONSE #100
+    IncrementGlobal("NQ#CARRIO","GLOBAL",1)
+	AddJournalEntry(@70049,QUEST)
+END

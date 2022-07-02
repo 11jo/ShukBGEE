@@ -1,0 +1,72 @@
+IF
+  Global("NQ#NEEDTHATPLACE","OH2000",0)
+THEN
+  RESPONSE #100
+    SpawnPtDeactivate("Spawn 2")
+    SetGlobal("NQ#NEEDTHATPLACE","OH2000",1)
+END
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",0)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#GB06",[707.2012],11)			// Vielauge
+	CreateCreature("NQ#GB07",[3011.3080],2)			// Paek
+	CreateCreature("NQ#GB08",[3536.3292],0)			// Raki der Schnitzer
+	CreateCreature("NQ#GB09",[4797.1833],3)			// Izvo der Koch
+    SetGlobal("NQ#GOBLINCREW","GLOBAL",1)
+END
+
+IF
+  Global("NQ#PAEK","GLOBAL",1)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#GB11",[3385.1336],0)			// Mulm
+    CreateCreature("NQ#GB12",[3335.1419],9)			// Mulms Gesindel
+    CreateCreature("NQ#GB12",[3395.1446],7)			// Mulms Gesindel
+	CreateCreature("NQ#GB12",[3435.1378],5)			// Mulms Gesindel
+	CreateCreature("NQ#GB12",[3463.1288],3)			// Mulms Gesindel
+    SetGlobal("NQ#PAEK","GLOBAL",2)
+END
+
+IF
+  Global("NQ#RAKI","GLOBAL",1)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#GB14",[2007.1888],12)		// Axtschwinger
+    CreateCreature("NQ#GB14",[2058.1909],8)			// Axtschwinger
+    CreateCreature("NQ#GB14",[2101.1888],4)			// Axtschwinger
+    SetGlobal("NQ#RAKI","GLOBAL",2)
+END
+
+
+IF
+  Global("NQ#RAKI","GLOBAL",6)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#DRV0",[1816.1326],1)			// Baumhirte
+	SetGlobal("NQ#RAKI","GLOBAL",7)
+END
+
+IF
+  Global("NQ#FASS","OH2000",0)
+THEN
+  RESPONSE #100
+	CreateCreature("NQ#BAR3",[4904.1690],11)		// Fass Fake
+	CreateCreature("NQ#BAR3",[1053.2177],11)		// Fass Fake
+	SetGlobal("NQ#FASS","OH2000",1)
+END
+	
+	
+IF
+  Global("NQ#IZVO","GLOBAL",1)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#BAR4",[3168.3556],0)			// Fass
+	CreateCreature("NQ#BAR4",[4690.3548],0)			// Fass
+	CreateCreature("NQ#BAR4",[4709.3470],0)			// Fass
+	CreateCreature("NQ#BAR4",[3723.1762],0)			// Fass
+	CreateCreature("NQ#BAR4",[2561.2545],11)		// Fass
+	CreateCreature("NQ#BAR4",[1479.2656],11)		// Fass
+    SetGlobal("NQ#IZVO","GLOBAL",2)
+END

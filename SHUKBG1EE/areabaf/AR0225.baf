@@ -1,0 +1,169 @@
+	// Global("NQ#SHUKRATCHILD","GLOBAL",1)		Ratchild gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",2)		DLG Kanal Ratchild gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",3)		DLG Kanal Ratchild nicht gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",4)		Abglehnt.
+	// Global("NQ#SHUKRATCHILD","GLOBAL",5)		Angenommen.
+	// Global("NQ#SHUKRATCHILD","GLOBAL",6)		Spawn der Crew erfolgt.
+
+IF
+  Global("NQ#SHUKRATCHILD","GLOBAL",5)
+THEN
+  RESPONSE #100
+//	PlaySound(S:Sound*)
+    CreateCreature("NQ#GB10",[2113.1883],15)			// Narthag
+	AddMapNoteColor([2113.1883],@8602,DEFAULT)			// Narthag die Ratte
+
+	CreateCreature("NQ#GB28",[2422.1908],3)				// Rastak
+//	AddMapNoteColor([2113.1883],@8602,DEFAULT)			// 
+	
+	CreateCreature("NQ#GB25",[2200.1695],8)				// Schütze 1
+	CreateCreature("NQ#GB25",[1720.1888],3)				// Schütze 2
+    CreateCreature("NQ#GB25",[2420.1803],10)			// Schütze 3
+    CreateCreature("NQ#GB25",[2621.1905],12)			// Schütze 4
+	CreateCreature("NQ#GB24",[2570.2032],14)			// Axtschwinger 5
+    CreateCreature("NQ#GB25",[2089.2162],2)				// Schütze 6
+	CreateCreature("NQ#GB25",[1909.2068],3)				// Schütze 7
+	CreateCreature("NQ#GB24",[2296.1864],0)				// Axtschwinger 8
+	CreateCreature("NQ#GB24",[1785.2098],2)				// Axtschwinger 9
+	CreateCreature("NQ#GB25",[2792.2104],13)			// Schütze 10
+	
+//	CreateCreature("NQ#GB24",[3606.388],15)				// Axtschwinger 11
+	CreateCreature("NQ#GB24",[3601.383],15)				// Axtschwinger 11
+	CreateCreature("NQ#GB24",[3672.358],0)				// Axtschwinger 12
+	CreateCreature("NQ#GB25",[3838.470],4)				// Schütze 13
+
+	CreateCreature("NQ#GB24",[3624.2225],14)			// Axtschwinger 14
+	CreateCreature("NQ#GB25",[3767.2368],8)				// Schütze 15
+	
+	CreateCreature("NQ#GB25",[3665.1233],8)				// Schütze 16
+	CreateCreature("NQ#GB25",[3775.1233],8)				// Schütze 17
+	
+	CreateCreature("NQ#GB24",[3837.1633],3)				// Axtschwinger 18
+	CreateCreature("NQ#GB25",[3720.1853],8)				// Schütze	19
+
+	CreateCreature("NQ#GB24",[3857.2827],3)				// Axtschwinger 20
+	CreateCreature("NQ#GB25",[3817.2777],4)				// Schütze
+	
+	CreateCreature("NQ#GB25",[1591.945],12)				// Schütze
+	CreateCreature("NQ#GB25",[1972.857],4)				// Schütze
+	CreateCreature("NQ#GB24",[1897.1095],8)				// Axtschwinger
+
+	CreateCreature("NQ#GB25",[1099.1059],4)				// Schütze
+
+	CreateCreature("NQ#GB25",[2584.698],12)				// Schütze		
+
+    SetRestEncounterProbabilityDay(0)
+    SetRestEncounterProbabilityNight(0)
+	
+	RemoveMapNote([2272.1946],19780)   					// Ratchild
+	RemoveMapNote([2272.1946],19781)   					// Ratchild
+	
+	SetGlobal("NQ#SHUKRATCHILD","GLOBAL",6)
+END
+
+// Gänge
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",5)
+  Global("NQ#WEST","AR0225",0) 
+THEN
+  RESPONSE #100
+    AddMapNoteColor([1093.2324],@8603,GREEN)			// Westliche Gänge
+    AddMapNoteColor([1528.2731],@8603,GREEN)			// Westliche Gänge
+	AddMapNoteColor([136.1326],@8603,GREEN)				// Westliche Gänge
+	AddMapNoteColor([3885.1119],@8604,GREEN)			// Östliche Gänge
+    AddMapNoteColor([3725.3259],@8604,GREEN)			// Östliche Gänge
+    AddMapNoteColor([2224.3242],@8605,GREEN)			// Unterkeller		
+	SetGlobal("NQ#WEST","AR0225",1)
+END
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",5)
+  Global("NQ#WEST","AR0225",0) 
+THEN
+  RESPONSE #100
+    AddMapNoteColor([1093.2324],@8603,RED)
+    AddMapNoteColor([1528.2731],@8603,RED)
+	AddMapNoteColor([136.1326],@8603,RED)
+	SetGlobal("NQ#WEST","AR0225",1)
+END
+
+
+// Event 1
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",1)
+  GlobalLT("NQ#SHUKSPALACEEVENT1","GLOBAL",5)
+  Global("NQ#SPAWNKRUCK","AR0225",0)
+THEN
+  RESPONSE #100
+  	CreateCreature("NQ#GB26",[3781.2494],4)				// Kruck
+	AddMapNoteColor([3781.2494],@8600,DEFAULT)			// Kruck
+	SetGlobal("NQ#SPAWNKRUCK","AR0225",1)
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",5)
+THEN
+  RESPONSE #100
+    RemoveMapNote([3781.2494],@8600)   					// Kruck
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",6)
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",7)
+  Global("NQ#FRONT","AR0225",0)
+THEN
+  RESPONSE #100
+	AddMapNoteColor([3641.376],@8601,RED)				// Ort des Angriffs
+	SetGlobal("NQ#FRONT","AR0225",1)
+END
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",13)
+  Global("NQ#FRONT","AR0225",1) 
+THEN
+  RESPONSE #100
+	RemoveMapNote([3641.376],@8601)						// Ort des Angriffs
+	SetGlobal("NQ#FRONT","AR0225",0)
+END
+
+// Event 1, Nesslers Eimer
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",6)
+  GlobalLT("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+  Time(0)
+  Global("NQ#NESS1","GLOBAL",0)
+THEN
+  RESPONSE #100	
+	SetGlobal("NQ#NESS1","GLOBAL",1)
+END
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",6)
+  GlobalLT("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+  Global("NQ#NESS1","GLOBAL",1)
+THEN
+  RESPONSE #100	
+    CreateVisualEffect("SPUNHOLY",[3635.373])
+	Wait(1)
+    CreateVisualEffect("SPFIREPI",[3635.373])
+	CreateVisualEffect("SPFLAMES",[3635.373])
+	CreateCreature("NQ#TAR",[3635.373],4)				// Ziel
+	ActionOverride("NQ#TAR", ReallyForceSpellPointRES("NQ#NESS1",[3635.373]))
+	ActionOverride("NQ#TAR", DestroySelf())
+	SetGlobal("NQ#NESS1","GLOBAL",2)
+END
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",6)
+  GlobalLT("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+  !Time(0)
+  OR(2)
+  Global("NQ#NESS1","GLOBAL",2)
+  Global("NQ#NESS1","GLOBAL",3)
+THEN
+  RESPONSE #100	
+	SetGlobal("NQ#NESS1","GLOBAL",0)
+END

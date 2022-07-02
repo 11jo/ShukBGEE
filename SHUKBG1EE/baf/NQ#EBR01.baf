@@ -1,0 +1,66 @@
+// Verbesserte Berserkerwut vor Ende des Kampfes
+
+IF
+  HPPercentLT(Myself,20)
+  Global("LASTWILL","LOCALS",0)
+  See(Nearestenemyof(Myself))
+  Range(Lastseenby(Myself),3) 
+THEN
+  RESPONSE #100
+      ClearAllActions()
+	  ReallyForceSpellRES("NQ#EBR1B",Lastseenby(Myself))
+      ReallyForceSpellRES("NQ#EBR1C",Myself)
+      SetGlobal("LASTWILL","LOCALS",1)
+END
+
+// Mantel der Furcht
+
+IF
+  Global("EBRFEAR","LOCALS",0)
+  See(Nearestenemyof(Myself))
+  Range(Lastseenby(Myself),10)  
+THEN
+  RESPONSE #100
+      ClearAllActions()
+	  FaceObject(Lastseenby(Myself))
+	  DisplayStringHead(Myself,@80002) 
+      ReallyForceSpellRES("NQ#EBR1B",Lastseenby(Myself))
+	  SetGlobal("EBRFEAR","LOCALS",1)  
+END
+
+// Gegner in Umgebung wegstoßen
+
+IF
+  HPPercentLT(Myself,60)
+  Global("EBRPOWER","LOCALS",0)
+  See(Nearestenemyof(Myself))
+  Range(Lastseenby(Myself),3)
+  
+THEN
+  RESPONSE #100
+      ClearAllActions()
+	  FaceObject(Nearestenemyof(Myself))
+      SetSequence(SEQ_ATTACK_JAB)
+      ReallyForceSpellRES("NQ#EBR1A",Lastseenby(Myself))
+	  SetGlobal("EBRPOWER","LOCALS",1)  
+	  SetGlobalTimer("EBRPOWERTIME","LOCALS",15)
+END
+
+IF
+   GlobalTimerExpired("EBRPOWERTIME","LOCALS")
+   !Global("EBRPOWER","LOCALS",0) 
+THEN
+  RESPONSE #100
+    SetGlobal("EBRPOWER","LOCALS",0)  
+END
+
+// Worg angreifen
+
+IF
+  OR(2)
+  See(Nearestenemyof(Myself))
+  See("NQ#WARAS")
+THEN
+  RESPONSE #100
+    AttackReevaluate(Lastseenby(Myself),30)
+END

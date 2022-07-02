@@ -1,0 +1,6 @@
+IF
+  Clicked([0])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,@8301)   // ~Dieser Weg ist versperrt.~
+END

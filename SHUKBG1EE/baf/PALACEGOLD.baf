@@ -1,0 +1,75 @@
+// Standart
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",4)
+  !Global("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+  GlobalTimerExpired("NQ#SHUKSPALACEGOLD","GLOBAL")
+  GlobalLT("NQ#SHUKSPALACEGOLDIS","GLOBAL",1000)
+THEN
+  RESPONSE #100
+	ActionOverride(Player1,DisplayStringHead(Myself, @8507))
+	IncrementGlobal("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+    IncrementGlobal("NQ#SHUKSPALACEGOLDIS","GLOBAL",200)
+    SetGlobalTimer("NQ#SHUKSPALACEGOLD","GLOBAL",THREE_DAYS)
+END
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",4)
+  !Global("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+  GlobalTimerExpired("NQ#SHUKSPALACEGOLD","GLOBAL")
+  GlobalGT("NQ#SHUKSPALACEGOLDIS","GLOBAL",999)
+THEN
+  RESPONSE #100
+    IncrementGlobal("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+	ActionOverride(Player1,DisplayStringHead(Myself, @8507))
+    SetGlobalTimer("NQ#SHUKSPALACEGOLD","GLOBAL",THREE_DAYS)
+END
+
+// Event 1
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",4)
+  Global("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+  GlobalTimerExpired("NQ#SHUKSPALACEGOLD","GLOBAL")
+  GlobalLT("NQ#SHUKSPALACEGOLDIS","GLOBAL",1000)
+THEN
+  RESPONSE #100
+  	ActionOverride(Player1,DisplayStringHead(Myself, @8507))
+	IncrementGlobal("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+    IncrementGlobal("NQ#SHUKSPALACEGOLDIS","GLOBAL",200)
+    SetGlobalTimer("NQ#SHUKSPALACEGOLD","GLOBAL",THREE_DAYS)
+	
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",1)						// Start Event 1
+END
+
+IF
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",4)
+  Global("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+  GlobalTimerExpired("NQ#SHUKSPALACEGOLD","GLOBAL")
+  GlobalLT("NQ#SHUKSPALACEGOLDIS","GLOBAL",1000)
+THEN
+  RESPONSE #100
+  	ActionOverride(Player1,DisplayStringHead(Myself, @8507))
+	IncrementGlobal("NQ#SHUKSPALACEEVENT","GLOBAL",1)
+    SetGlobalTimer("NQ#SHUKSPALACEGOLD","GLOBAL",THREE_DAYS)
+	
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",1)						// Start Event 1
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",1)  							// Event 1 gestartet?
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !AreaCheck("AR0225")
+  !AreaCheck("%IceIsland%")				//  Shandalars Insel
+  !AreaCheck("%IsleofBalduranN%")		//	Werwolfinsel
+  !AreaCheck("%IsleofBalduranS%")		//	Werwolfinsel
+  !AreaCheck("%Candlekeep%")			//	Kerzenburg
+  !AreaCheck("%Candlekeep_Ch6%")		//	Kerzenburg
+  !AreaCheck("NQ#HM1")					//  Spielerhaus KMM
+  !AreaCheck("NQ#HM2")					//  Spielerhaus KMM
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#GB27",[-1.-1],12)								// Schleicher
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",2)						// Spawn Schleicher erfolgt
+END
+

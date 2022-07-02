@@ -1,0 +1,1497 @@
+	// Spawn
+
+IF
+  Global("NQ#SHU","GLOBAL",2)										// Neue Beschwörung
+THEN
+  RESPONSE #100
+    MakeGlobal()
+	CreateVisualEffectObject("SPSUMMON",Myself)						//
+	MakeUnselectable(100)
+    SetGlobal("NQ#SHU","GLOBAL",3)
+END
+
+IF
+  Global("NQ#SHU","GLOBAL",25)										// Alte Beschwörung
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("SPSUMMON",Myself)						//
+	MakeUnselectable(100)
+    SetGlobal("NQ#SHU","GLOBAL",3)
+END
+
+IF
+  Global("NQ#SHU","GLOBAL",3)
+  Global("NQ#SHUKSPAWNENEMY","GLOBAL",0)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKSPAWNENEMY","GLOBAL",1)
+END
+
+	// Spawnskills
+
+IF
+  Global("SHUKHP","GLOBAL",1)
+  Global("NQ#SHUKHP","LOCALS",0)
+THEN
+  RESPONSE #100 
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#HP05",Myself)							// + 5 HP
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+END
+
+IF
+  Global("SHUKHP","GLOBAL",2)
+  Global("NQ#SHUKHP","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#HP10",Myself)							// + 10 HP
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+END
+
+IF
+  Global("SHUKHP","GLOBAL",3)
+  Global("NQ#SHUKHP","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#HP15",Myself)							// + 15 HP
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKCANJUMP","GLOBAL",2)
+  Global("NQ#SHUKJUMP","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SJP0",Myself)							// Skill: Steinsprung
+	SetGlobal("NQ#SHUKJUMP","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKPOISON","GLOBAL",4)
+  Global("NQ#SHUKKNOWPOISON","LOCALS",0)
+THEN
+  RESPONSE #100 
+    CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SHGI",Myself)							// Skill: Waffe vergiften
+	SetGlobal("NQ#SHUKKNOWPOISON","LOCALS",1)
+END
+
+IF
+  Global("NQ#WARAS","GLOBAL",10)
+  Global("NQ#SHUKANDWARAS","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#WR1",Myself)							// Skill: Worgreiter
+	SetGlobal("NQ#SHUKANDWARAS","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSCREW","GLOBAL",1)
+  Global("NQ#SHUKCREWSPAWN","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SCRF",Myself)							// Skill: Goblincrew rufen
+	SetGlobal("NQ#SHUKCREWSPAWN","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",21)
+  Global("NQ#SHUKFIRE","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#MI48",Myself)							// Skill: Wurftrank
+	FillSlot(SLOT_WEAPON3)
+	EquipMostDamagingMelee()	
+	SetGlobal("NQ#SHUKFIRE","LOCALS",1)
+END
+
+	// Lvl
+
+IF  
+  Global("NQ#SHUKLEVEL","LOCALS",0)
+THEN
+  RESPONSE #100
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",1)
+//	DisplayString(Myself, @8901)   									// 1
+END
+	
+IF  
+  CheckStatGT(Player1,7999,XP)										// Player: 4-5 (W)
+  CheckStat(Myself,1,Level)											// 1
+  Global("NQ#SHUKLEVEL","LOCALS",1)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",2)
+//	DisplayString(Myself, @8902)   									// 2
+END
+
+IF  
+  CheckStatGT(Player1,31999,XP)										// Player: 6-7 (W)
+  CheckStat(Myself,2,Level)											// 2
+  Global("NQ#SHUKLEVEL","LOCALS",2)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",3)
+//	DisplayString(Myself, @8903)   									// 3
+END
+
+IF  
+  CheckStatGT(Player1,124999,XP)									// Player: 8-9 (W)
+  CheckStat(Myself,3,Level)											// 3
+  Global("NQ#SHUKLEVEL","LOCALS",3)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",4)
+//	DisplayString(Myself, @8904)   									// 4
+END
+
+IF  
+  CheckStatGT(Player1,499999,XP)									// Player: 10-11 (W)
+  CheckStat(Myself,4,Level)											// 4
+  Global("NQ#SHUKLEVEL","LOCALS",4)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",5)
+//	DisplayString(Myself, @8905)   									// 5
+END
+
+IF  
+  CheckStatGT(Player1,999999,XP)									// Player: 12-13 (W)
+  CheckStat(Myself,5,Level)											// 5
+  Global("NQ#SHUKLEVEL","LOCALS",5)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+    SetGlobal("NQ#SHUKLEVEL","LOCALS",6)
+//	DisplayString(Myself, @8906)   									// 6
+END
+
+IF  
+  CheckStatGT(Player1,1499999,XP)									// Player: 14-15 (W)
+  CheckStat(Myself,6,Level)											// 6
+  Global("NQ#SHUKLEVEL","LOCALS",6)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",7)
+//	DisplayString(Myself, @8907)   									// 7
+END
+
+IF  
+  CheckStatGT(Player1,1999999,XP)									// Player: 16-17 (W)
+  CheckStat(Myself,7,Level)											// 7
+  Global("NQ#SHUKLEVEL","LOCALS",7)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",8)
+//	DisplayString(Myself, @8908)   									// 8
+END
+
+IF  
+  CheckStatGT(Player1,2499999,XP)									// Player: 18-19 (W)
+  CheckStat(Myself,8,Level)											// 8
+  Global("NQ#SHUKLEVEL","LOCALS",8)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",9)
+//	DisplayString(Myself, @8909)   									// 9
+END
+
+IF  
+  CheckStatGT(Player1,2999999,XP)									// Player: ab 20 (W)
+  CheckStat(Myself,9,Level)											// 9
+  Global("NQ#SHUKLEVEL","LOCALS",9)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SLVL",Myself)
+	SetGlobal("NQ#SHUKLEVEL","LOCALS",10)
+//	DisplayString(Myself, @8910)   									// 10
+END
+
+// Ausrüstung - Axt, Rüstung, Schild
+
+
+	// Global("NQ#SHUKAX","GLOBAL",0) - Keine Axt ausgerüstet -> Nimm 1 oder 2
+	// Global("NQ#SHUKAX","GLOBAL",1) - Streitaxt
+	// Global("NQ#SHUKAX","GLOBAL",2) - Streitaxt +1
+	// Global("NQ#SHUKAX","GLOBAL",3) - Streitaxt von Mauletar +2
+	// Global("NQ#SHUKAX","GLOBAL",4) - Krunturs Axt
+
+	// Global("NQ#SHUKAXEQ","LOCALS",0) - Keine Waffe oder Überprüfung
+	// Global("NQ#SHUKAXEQ","LOCALS",1) - Waffe ausgerüstet
+
+	//  CreateVisualEffectObject("ABJURH",Myself)
+	
+IF
+  Global("NQ#SHUKAX","GLOBAL",3)
+  Global("NQ#SHUKAXEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+	ReallyForceSpellRES("NQ#AX082",Myself)
+	DisplayString(Myself,@8223)										// Streitaxt von Mauletar +2 ausgerüstet.
+	FillSlot(SLOT_WEAPON0)
+	FillSlot(SLOT_WEAPON2)
+	EquipMostDamagingMelee()	
+    SetGlobal("NQ#SHUKAXEQ","LOCALS",1)
+END
+	
+IF
+  Global("NQ#SHUKAX","GLOBAL",4)
+  Global("NQ#SHUKAXEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+	ReallyForceSpellRES("NQ#AX081",Myself)
+	DisplayString(Myself,@8220)										// Kruntur's Axt +2 ausgerüstet.
+	FillSlot(SLOT_WEAPON0)
+	FillSlot(SLOT_WEAPON2)
+//	EquipMostDamagingMelee()
+	EquipRanged()
+    SetGlobal("NQ#SHUKAXEQ","LOCALS",1)
+END
+
+IF
+  GlobalLT("NQ#SHUKAX","GLOBAL",3)
+  GlobalLT("NQ#SHUKLEVEL","LOCALS",3)
+//  CheckStatLT(Myself,3,Level)
+  Global("NQ#SHUKAXEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)
+	ReallyForceSpellRES("NQ#AX079",Myself)
+	DisplayString(Myself,@8221)										// Streitaxt ausgerüstet.
+	FillSlot(SLOT_WEAPON0)
+	FillSlot(SLOT_WEAPON2)
+	EquipMostDamagingMelee()
+	SetGlobal("NQ#SHUKAX","GLOBAL",1)
+	SetGlobal("NQ#SHUKAXEQ","LOCALS",1)
+END  
+
+IF
+  GlobalLT("NQ#SHUKAX","GLOBAL",3)
+  GlobalGT("NQ#SHUKLEVEL","LOCALS",2)
+//  CheckStatGT(Myself,2,Level)
+  Global("NQ#SHUKAXEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)
+	ReallyForceSpellRES("NQ#AX080",Myself)
+	DisplayString(Myself,@8222)										// Streitaxt +1 ausgerüstet.
+	FillSlot(SLOT_WEAPON0)
+	FillSlot(SLOT_WEAPON2)	
+	EquipMostDamagingMelee()
+	SetGlobal("NQ#SHUKAX","GLOBAL",2)
+	SetGlobal("NQ#SHUKAXEQ","LOCALS",1)
+END 
+
+// 
+
+IF
+  OR(2)
+  Global("NQ#SHUKARMOR","GLOBAL",0)
+  Global("NQ#SHUKARMOR","GLOBAL",100)
+  Global("NQ#SHUKARMOREQ","LOCALS",0)
+  CheckStatLT(Player1,4,Level)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT01",Myself)							// Lederwams
+	Polymorph(GOBLIN_AXE)	
+	DisplayString(Myself,@8209)										// Lederwams ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",1)
+END	
+	
+IF
+  OR(2)
+  Global("NQ#SHUKARMOR","GLOBAL",0)
+  Global("NQ#SHUKARMOR","GLOBAL",100)
+  Global("NQ#SHUKARMOREQ","LOCALS",0)
+  CheckStatGT(Player1,3,Level)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT04",Myself)							// Beschlagenes Lederwams
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8210)										// Beschlagenes Lederwams ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",1)
+END
+	
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",101)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT05",Myself)							// Beschlagenes Lederwams +1
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8206)										// Beschlagenes Lederwams +1 ausgerüstet. ("NQ#LT55")
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",102)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT07",Myself)							// Telbars beschlagenes Lederwams +2
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8207)										// Telbars beschlagenes Lederwams +2 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",103)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT07",Myself)							// Telbars beschlagenes Lederwams +2 (Da kein Unterschied außer Beschreibung)
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8208)										// Beschlagenes Lederwams +2 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+// DS:
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",104)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT102",Myself)							// Goblin Hide Armor +2
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8211)										// Goblin Hide Armor +2 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",105)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT103",Myself)							// Raconteur's Regalia +2
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8212)										// Raconteur's Regalia +2 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",106)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT104",Myself)							// Changeling's Vest
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8213)										// Weste des Wechselbalgs ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",107)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT105",Myself)							// Dragonscale Armor
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8214)										// Grüne Drachenschuppenrüstung ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",108)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT106",Myself)							// Goblin Leathers +1
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8215)										// Goblinleder +1 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",109)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT107",Myself)							// The Night's Embrace +3
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8216)										// Die Umarmung der Nacht +3 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",110)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT108",Myself)							// Hide Armor +1
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8217)										// Hide Armor +1 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",111)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT109",Myself)							// Jegg's Leathers +2
+	Polymorph(GOBLIN_ELITE_AXE)
+	DisplayString(Myself,@8218)										// Jegg's Lederrüstung +2 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+IF
+  Global("NQ#SHUKARMOR","GLOBAL",112)
+  GlobalLT("NQ#SHUKARMOREQ","LOCALS",2)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT110",Myself)							// Kruntur's Armor +3
+	Polymorph(GOBLIN_CAPTAIN)
+	DisplayString(Myself,@8219)										// Kruntur's Rüstung +3 ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",2)
+END
+
+	// Ausrüstung Shld
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",100)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD01",Myself)							// Kleiner Schild
+	DisplayString(Myself,@8200)										// Kleiner Schild ausgerüstet.
+	SetGlobal("NQ#SHUKSHLD","GLOBAL",2)
+    SetGlobal("NQ#SHUKSHLDEQ","LOCALS",0)
+END	
+	
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",101)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD20",Myself)							// Kiels Tartsche
+	DisplayString(Myself,@8201)										// Kiels Tartsche ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",102)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD02A",Myself)							// Kleiner Schild +1 (modern)
+	DisplayString(Myself,@8202)										// Kleiner Schild +1 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",103)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD02",Myself)							// Kleiner Schild +1
+	DisplayString(Myself,@8202)										// Kleiner Schild +1 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",104)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD28",Myself)							// Kleiner Schild +2
+	DisplayString(Myself,@8203)										// Kleiner Schild +2 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",105)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD04A",Myself)							// Mittlerer Schild +1 (modern)
+	DisplayString(Myself,@8204)										// Mittlerer Schild +1 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",106)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD04",Myself)							// Mittlerer Schild +1
+	DisplayString(Myself,@8204)										// Mittlerer Schild +1 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSHLD","GLOBAL",107)
+  Global("NQ#SHUKSHLDEQ","LOCALS",0)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#SD29",Myself)							// Mittlerer Schild +2
+	DisplayString(Myself,@8205)										// Mittlerer Schild +2 ausgerüstet.
+	SetGlobal("NQ#SHUKSHLDEQ","LOCALS",1)
+END
+
+	// Sichtbar / Beweglich nach Skillzuteilung / Start des Beschwörungstimers
+	
+IF
+  Global("NQ#SHU","GLOBAL",3)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKSPAWN","GLOBAL",1)
+	SetGlobalTimer("NQ#SHUKSPAWNTIME1","LOCALS",EIGHTEEN_HOURS)
+	SetGlobalTimer("NQ#SHUKSPAWNTIME2","LOCALS",ONE_DAY)
+//	ChangeEnemyAlly(Myself, FAMILIAR)
+    ChangeEnemyAlly(Myself, CONTROLLED)
+    AddFamiliar()
+	MakeUnselectable(0)
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+	SetGlobal("NQ#SHU","GLOBAL",4)
+END
+
+	// Bessere Axt +1 ab Level 3
+
+IF  
+  GlobalGT("NQ#SHUKLEVEL","LOCALS",2)
+  OR(2)
+  Global("NQ#SHUKAX","GLOBAL",0)
+  Global("NQ#SHUKAX","GLOBAL",1)
+THEN
+  RESPONSE #100
+	SetGlobal("NQ#SHUKAX","GLOBAL",2)
+	SetGlobal("NQ#SHUKAXEQ","LOCALS",0)
+END
+
+	// Beschl. Lederwams / Helm ab Level 3
+
+IF  
+  GlobalGT("NQ#SHUKLEVEL","LOCALS",2)
+  HasItem("NQ#LT001",Myself)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#LT04",Myself)							// Beschlagenes Lederwams
+	DisplayString(Myself,@8210)										// Beschlagenes Lederwams ausgerüstet.
+	SetGlobal("NQ#SHUKARMOREQ","LOCALS",1)
+END
+
+IF  
+  GlobalGT("NQ#SHUKLEVEL","LOCALS",2)
+  !HasItem("NQ#HL001",Myself)
+THEN
+  RESPONSE #100
+  	ReallyForceSpellRES("NQ#ORH",Myself)							//  
+//  CreateVisualEffectObject("ABJURH",Myself)						//
+    ReallyForceSpellRES("NQ#HL01",Myself)							// Helm
+	DisplayString(Myself,@8224)										// Helm ausgerüstet.
+END
+
+	// Erste Skill Freischaltung
+
+IF
+  Global("NQ#SHUKPOISON","GLOBAL",3)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SHGI",Myself)							// Skill: Waffe vergiften
+	DisplayString(Myself,@8500)										// Shuk kann seine Waffe einmal täglich vergiften.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	SetGlobal("NQ#SHUKPOISON","GLOBAL",4)
+	SetGlobal("NQ#SHUKKNOWPOISON","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+IF
+  Global("NQ#SHUKBIGSPIDER","GLOBAL",3)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#HP05",Myself)							// + 5 HP
+	DisplayString(Myself,@8501)										// Shuks Trefferpunkte wurden dauerhaft um +5 erhöht.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	IncrementGlobal("SHUKHP","GLOBAL",1)
+    SetGlobal("NQ#SHUKBIGSPIDER","GLOBAL",4)
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+IF
+  Global("NQ#IZVO","GLOBAL",11)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#HP05",Myself)							// + 5 HP
+	DisplayString(Myself,@8501)										// Shuks Trefferpunkte wurden dauerhaft um +5 erhöht.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	IncrementGlobal("SHUKHP","GLOBAL",1)
+    SetGlobal("NQ#IZVO","GLOBAL",12)
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+IF
+  Global("NQ#SHUKGHOSTSPIDER","GLOBAL",2)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#HP05",Myself)							// + 5 HP
+	DisplayString(Myself,@8501)										// Shuks Trefferpunkte wurden dauerhaft um +5 erhöht.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	IncrementGlobal("SHUKHP","GLOBAL",1)
+    SetGlobal("NQ#SHUKGHOSTSPIDER","GLOBAL",3)
+	SetGlobal("NQ#SHUKHP","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+IF
+  Global("NQ#WARAS","GLOBAL",9)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#WR1",Myself)							// Skill: Worgreiter
+	DisplayString(Myself,@8502)										// Shuk kann jetzt den Worg Waras als Reittier herbeirufen.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",3)
+	SetGlobal("NQ#WARAS","GLOBAL",10)
+	SetGlobal("NQ#SHUKANDWARAS","LOCALS",1)
+	DisplayString(Myself,@8812)										// Shuks Verhältnis zu Euch hat sich verbessert. (+3)
+END
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+  Global("NQ#SHUKSCREW","GLOBAL",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SCRF",Myself)							// Skill: Goblincrew rufen
+	DisplayString(Myself,@8505)										// Shuk kann jetzt einmal täglich Goblintruppen herbeirufen.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",3)
+    SetGlobal("NQ#SHUKSCREW","GLOBAL",1)
+	SetGlobal("NQ#SHUKCREWSPAWN","LOCALS",1)
+	DisplayString(Myself,@8812)										// Shuks Verhältnis zu Euch hat sich verbessert. (+3)	
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+  Global("NQ#SHUKFIRE","LOCALS",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#MI48",Myself)							// Skill: Wurftrank
+	FillSlot(SLOT_WEAPON3)
+	EquipMostDamagingMelee()
+	DisplayString(Myself,@8506)										// Shuk und seine Crew können jetzt explosive Wurftränke einsetzen.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",21)
+	SetGlobal("NQ#SHUKFIRE","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+  
+IF
+  GlobalGT("NQ#SHUKSHLD","GLOBAL",100)								// Neuer Schild
+  Global("NQ#SHUKGOTASHLD","GLOBAL",0)
+THEN
+  RESPONSE #100
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	SetGlobal("NQ#SHUKGOTASHLD","GLOBAL",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)	
+END
+
+IF
+  GlobalGT("NQ#SHUKARMOR","GLOBAL",100)								// Neue Rüstung
+  Global("NQ#SHUKGOTAROMR","GLOBAL",0)
+THEN
+  RESPONSE #100
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	SetGlobal("NQ#SHUKGOTAROMR","GLOBAL",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+IF
+  Global("NQ#SHUKCANJUMP","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SJP0",Myself)							// Skill: Steinsprung
+	DisplayString(Myself,@8504)										// Shuk kann sich jederzeit zu seinem Stein teleportieren.
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",1)
+	SetGlobal("NQ#SHUKCANJUMP","GLOBAL",2)
+	SetGlobal("NQ#SHUKJUMP","LOCALS",1)
+	DisplayString(Myself,@8810)										// Shuks Verhältnis zu Euch hat sich verbessert. (+1)
+END
+
+	// Tod / Ende der Beschwörung	
+	
+IF
+  HPLT(Myself,2)
+  !Global("NQ#SHUKUNSPAWN","GLOBAL",1)
+THEN
+  RESPONSE #100
+	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",1)
+END
+
+//IF
+//  OR(3)
+//  SpellCastOnMeRES("SPWI910",[ANYONE])							// Einkerkerung
+//  SpellCastOnMeRES("SPWI788",[ANYONE])
+//  SpellCastOnMeRES("SPWI953",[ANYONE])
+//  !Global("NQ#SHUKUNSPAWN","GLOBAL",1)  
+//THEN
+//  RESPONSE #100
+//	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",1)
+//END
+
+	// Müdigkeit
+
+IF
+  Global("NQ#SHUKSPAWN","GLOBAL",1)									// Global("NQ#SHU","GLOBAL",4) ersetzt
+  Global("TIRE","LOCALS",0)
+  GlobalTimerExpired("NQ#SHUKSPAWNTIME1","LOCALS")
+  !GlobalTimerExpired("NQ#SHUKSPAWNTIME2","LOCALS")
+  !ActuallyInCombat()
+THEN
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8100)									// Ich bin müde, Holzkopf! Schick mich wieder in den Stein!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8101)									// Hey Affengesicht, ich muss bald in den Stein zurück!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8102)									// Lass mich wieder in Stein, dämliche Made!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8103)									// Eiterbacke! Ich muss in den Stein!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8104)									// Ich musste Dich lange genug ertragen, Mastschwein! Jetzt lass mich in den Stein!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8105)									// Bist du blind oder nur dumm, Dumpfnase? Der Stein ruft nach mir!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8106)									// Elender, ich werde müde! Lass mich in den Stein!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8107)									// Bah! Zahnloser Krötenpiester! Der Stein ruft!~
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8108)									// Fettklopps! Schick mich endlich wieder in den Stein!
+	SetGlobal("TIRE","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpellRES("NQ#TIRE",Myself)							// Müdigkeit
+    DisplayStringHead(Myself,@8109)									// Du! Glubschauge! Ich will in den Stein. JETZT!
+	SetGlobal("TIRE","LOCALS",1)
+END	
+	
+IF
+  Global("NQ#SHUKSPAWN","GLOBAL",1)									// Global("NQ#SHU","GLOBAL",4) ersetzt
+  GlobalTimerExpired("NQ#SHUKSPAWNTIME2","LOCALS")
+  Global("NQ#SHUKUNSPAWN","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",1)
+END
+
+IF	
+  !PartyHasItem("NQ#SHUK")
+  Global("NQ#SHUKUNSPAWN","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",1)
+END	
+
+IF
+  !Global("NQ#SHUKSPALACEEVENT1","GLOBAL",21)						// Ohne Wurftrank
+  Global("NQ#SHUKUNSPAWN","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	IncrementGlobal("NQ#SHUKDIED","GLOBAL",1)
+	SetGlobal("NQ#SHUKSPAWN","GLOBAL",0)
+	SetGlobal("NQ#SHU","GLOBAL",0)
+	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",0)
+	CreateVisualEffectObject("DDOORH",Myself)
+
+    ReallyForceSpellDeadRES("NQ#REST2","NQ#SHUK")
+	FillSlot(SLOT_WEAPON1)											// Wurfaxt (richtige Anzahl anzeigen)
+	EquipMostDamagingMelee()
+	
+	RemoveFamiliar()
+	MakeGlobal()													// Muss hier stehen (sonst Respawn)
+	MoveGlobal("NQ#SHU","NQ#SHUK",[855.745])						// Shuks World
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",21)						// Mit Wurftrank
+  Global("NQ#SHUKUNSPAWN","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	IncrementGlobal("NQ#SHUKDIED","GLOBAL",1)
+	SetGlobal("NQ#SHUKSPAWN","GLOBAL",0)
+	SetGlobal("NQ#SHU","GLOBAL",0)
+	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",0)
+	CreateVisualEffectObject("DDOORH",Myself)
+
+    ReallyForceSpellDeadRES("NQ#REST2","NQ#SHUK")
+	FillSlot(SLOT_WEAPON1)											// Wurfaxt (richtige Anzahl anzeigen)
+	FillSlot(SLOT_WEAPON3)											// Wurftrank (richtige Anzahl anzeigen)	
+	EquipMostDamagingMelee()
+	
+	RemoveFamiliar()
+	MakeGlobal()													// Muss hier stehen (sonst Respawn)
+	MoveGlobal("NQ#SHU","NQ#SHUK",[855.745])						// Shuks World
+END
+
+IF
+  Global("NQ#SHUKUNSPAWN","GLOBAL",666)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	IncrementGlobal("NQ#SHUKDIED","GLOBAL",1)
+	SetGlobal("NQ#SHUKSPAWN","GLOBAL",0)
+	SetGlobal("NQ#SHU","GLOBAL",0)
+	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",0)
+	CreateVisualEffectObject("DDOORH",Myself)
+    ActionOverride("NQ#SHUK",Kill(Myself))
+END
+
+	// Areawechsel
+
+IF
+  !InActiveArea("NQ#SHUK")
+  !StateCheck(Myself, CD_STATE_NOTVALID)
+  !Global("NQ#SHU","GLOBAL",0)
+THEN
+  RESPONSE #100
+    MoveGlobalObject("NQ#SHUK", Player1)
+END
+
+	// Rast
+  
+IF	
+  Global("NQ#SHUKREST","GLOBAL",1)									// Ausgelöst über DPLAYER3
+  !Global("NQ#SHUKSPALACEEVENT1","GLOBAL",21)
+THEN
+  RESPONSE #100	
+    SetInterrupt(FALSE)
+    ReallyForceSpellRES("NQ#REST2","NQ#SHUK")
+	ApplySpellRES("NQ#REST2","NQ#SHUK")
+	FillSlot(SLOT_WEAPON1)											// Wurfaxt (richtige Anzahl anzeigen)									
+	EquipMostDamagingMelee()
+	SetGlobal("NQ#SHUKREST","GLOBAL",0)
+	DisplayStringHead(Myself,@8114)									// *Gähnt*
+    SetInterrupt(TRUE)	
+END
+
+IF	
+  Global("NQ#SHUKREST","GLOBAL",1)									// Ausgelöst über DPLAYER3
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",21)
+THEN
+  RESPONSE #100	
+    SetInterrupt(FALSE)
+    ReallyForceSpellRES("NQ#REST2","NQ#SHUK")
+	ApplySpellRES("NQ#REST2","NQ#SHUK")
+	FillSlot(SLOT_WEAPON1)											// Wurfaxt (richtige Anzahl anzeigen)
+	FillSlot(SLOT_WEAPON3)											// Wurftrank (richtige Anzahl anzeigen)	
+	EquipMostDamagingMelee()
+	SetGlobal("NQ#SHUKREST","GLOBAL",0)
+	DisplayStringHead(Myself,@8114)									// *Gähnt*
+    SetInterrupt(TRUE)	
+END
+
+	// Teleportskill (Steinsprung)
+	
+IF
+  Global("NQ#SJP","GLOBAL",1)
+  HasItem("NQ#SHUK",Player1)
+THEN
+  RESPONSE #100
+    MoveGlobalObject("NQ#SHUK", Player1)
+	SetGlobal("NQ#SJP","GLOBAL",0)
+END
+
+	// Crewspawn
+
+IF
+  Global("NQ#SCRE","GLOBAL",1)
+  !AreaCheck("BD4700")
+THEN
+  RESPONSE #50
+    CreateCreatureObject("NQ#GB01","NQ#SHUK",0,0,0)		// Goblin-Krieger
+	CreateCreatureObject("NQ#GB01","NQ#SHUK",0,0,0)		// Goblin-Krieger
+	SetGlobal("NQ#SCRE","GLOBAL",2)
+  RESPONSE #30
+    CreateCreatureObject("NQ#GB01","NQ#SHUK",0,0,0)		// Goblin-Krieger
+	CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	SetGlobal("NQ#SCRE","GLOBAL",2)
+  RESPONSE #20
+    CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	SetGlobal("NQ#SCRE","GLOBAL",2)
+END	
+
+IF
+  Global("NQ#SCRE","GLOBAL",2)
+  !AreaCheck("BD4700")
+THEN
+  RESPONSE #50
+	CreateCreatureObject("NQ#GB03","NQ#SHUK",0,0,0)		// Goblin-Bogenschütze
+	CreateCreatureObject("NQ#GB03","NQ#SHUK",0,0,0)		// Goblin-Bogenschütze
+	SetGlobal("NQ#SCRE","GLOBAL",3)
+  RESPONSE #30
+	CreateCreatureObject("NQ#GB03","NQ#SHUK",0,0,0)		// Goblin-Bogenschütze
+	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+	SetGlobal("NQ#SCRE","GLOBAL",3)
+  RESPONSE #20
+	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+	SetGlobal("NQ#SCRE","GLOBAL",3)
+END
+
+IF
+  Global("NQ#SCRE","GLOBAL",3)
+  !AreaCheck("BD4700")
+  !Dead("NQ#GB08")
+THEN
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB16","NQ#SHUK",0,0,0)		// Vielauge
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB17","NQ#SHUK",0,0,0)		// Paek
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB18","NQ#SHUK",0,0,0)		// Raki
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+END
+
+IF
+  Global("NQ#SCRE","GLOBAL",3)
+  !AreaCheck("BD4700")
+  Dead("NQ#GB08")
+THEN
+  RESPONSE #30
+  	CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #30
+  	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB16","NQ#SHUK",0,0,0)		// Vielauge
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+  RESPONSE #20
+  	CreateCreatureObject("NQ#GB17","NQ#SHUK",0,0,0)		// Paek
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+END
+
+IF
+  Global("NQ#SCRE","GLOBAL",1)
+  AreaCheck("BD4700")
+  !Dead("NQ#GB08")
+THEN
+  RESPONSE #100
+    CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+  	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+    CreateCreatureObject("NQ#GB16","NQ#SHUK",0,0,0)		// Vielauge
+  	CreateCreatureObject("NQ#GB17","NQ#SHUK",0,0,0)		// Paek
+	CreateCreatureObject("NQ#GB18","NQ#SHUK",0,0,0)		// Raki
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+END
+
+IF
+  Global("NQ#SCRE","GLOBAL",1)
+  AreaCheck("BD4700")
+  Dead("NQ#GB08")
+THEN
+  RESPONSE #100
+    CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+	CreateCreatureObject("NQ#GB02","NQ#SHUK",0,0,0)		// Goblin-Elite
+  	CreateCreatureObject("NQ#GB04","NQ#SHUK",0,0,0)		// Goblin-Kommando
+    CreateCreatureObject("NQ#GB16","NQ#SHUK",0,0,0)		// Vielauge
+  	CreateCreatureObject("NQ#GB17","NQ#SHUK",0,0,0)		// Paek
+  	SetGlobal("NQ#SCRE","GLOBAL",0)
+END
+
+	// Ratchild
+
+	// Global("NQ#SHUKRATCHILD","GLOBAL",1)		Ratchild gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",2)		DLG Kanal Ratchild gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",3)		DLG Kanal Ratchild nicht gesehen
+	// Global("NQ#SHUKRATCHILD","GLOBAL",4)		Abglehnt.
+	// Global("NQ#SHUKRATCHILD","GLOBAL",5)		Angenommen.
+	
+IF
+  See("Ratchild")
+  Global("NQ#SHUKRATCHILD","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKRATCHILD","GLOBAL",1)
+END	
+
+IF
+  AreaCheck("AR0225")
+  Global("NQ#SHUKRATCHILD","GLOBAL",1)
+  GlobalGT("NQ#SHUKSCREW","GLOBAL",0)					// Skill Goblincrew?
+  Dead("Ratchild")
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKRATCHILD","GLOBAL",2)
+END
+
+IF
+  AreaCheck("AR0225")									// CentralSewers
+  Global("NQ#SHUKRATCHILD","GLOBAL",0)
+  GlobalGT("NQ#SHUKSCREW","GLOBAL",0)					// Skill Goblincrew?
+  Dead("Ratchild")
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKRATCHILD","GLOBAL",3)
+END
+
+IF
+  OR(2)
+  Global("NQ#SHUKRATCHILD","GLOBAL",2)
+  Global("NQ#SHUKRATCHILD","GLOBAL",3)
+  AreaCheck("AR0225")
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    StartDialog("NQ#SHUK",Player1)
+END
+
+	// Kruck, Ness
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",6)
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    StartDialog("NQ#SHUK",Player1)
+END	
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",9)
+  GlobalLT("NQ#SHUKSPALACEEVENT1","GLOBAL",13)
+  !Global("NQ#NESS1","GLOBAL",2)
+  AreaCheck("AR0200")
+  Detect("NQ#TAR")
+  !See("NQ#NESS")
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+  Global("HIDEFORNESS","LOCALS",0)
+THEN
+  RESPONSE #100
+    StartDialog("NQ#SHUK",Player1)
+END	
+
+	// Die Axt
+
+IF
+  !HasItem("NQ#SPR31",Myself)
+  PartyHasItemIdentified("BDAX1H02")
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+  Global("NQ#SHUKKRUNTAX","GLOBAL",0)
+THEN
+  RESPONSE #100
+  	SetGlobal("NQ#SHUKKRUNTAX","GLOBAL",1)
+	StartDialog("NQ#SHUK",Lastseenby(Myself))
+END	
+	
+	// Große Spinne
+
+IF	
+  PartyHasItem("MISC60")
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+  Global("NQ#SHUKBIGSPIDER","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKBIGSPIDER","GLOBAL",1)
+	StartDialog("NQ#SHUK",Lastseenby(Myself))
+END	
+
+	// Gift
+	
+IF
+  Global("NQ#SHUKPOISON","GLOBAL",0)
+  OR(2)
+  StateCheck(Myself,STATE_POISONED)
+  HitBy([ANYTHING],POISON)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKPOISON","GLOBAL",1)
+    DisplayStringHead(Myself,@8111)   									// Soll das Gift sein, Kniepisser!? Lächerlich!
+	ReallyForceSpellRES("NQ#SHPO",Myself)
+END
+
+IF
+  GlobalGT("NQ#SHUKPOISON","GLOBAL",0)
+  StateCheck(Myself,STATE_POISONED)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#SHPO",Myself)
+	Continue()
+END
+
+	// ZFA
+
+IF
+  Global("NQ#ZFA","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKTELEPORT","GLOBAL",1)
+END
+
+IF
+  Global("NQ#ZFA","GLOBAL",0)
+  Global("NQ#SHUKTELEPORT","GLOBAL",1)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,@8112)   									// Ich hasse diese dreckigen Steine. 
+    SetGlobal("NQ#SHUKTELEPORT","GLOBAL",2)
+END
+	
+	// Gespräch Shld
+	
+IF	
+  GlobalGT("NQ#SHUKDIED","GLOBAL",4)
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+  Global("NQ#SHUKSHLD","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKSHLD","GLOBAL",1)
+	StartDialog("NQ#SHUK",Lastseenby(Myself))	
+END
+
+	// Gespräch 100 Tode
+
+IF	
+  GlobalGT("NQ#SHUKDIED","GLOBAL",99)
+  See(Player1)
+  !StateCheck(Player1,CD_STATE_NOTVALID)
+  !ActuallyInCombat()
+  Global("NQ#SHUK100LIVES","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUK100LIVES","GLOBAL",1)
+	StartDialog("NQ#SHUK",Lastseenby(Myself))	
+END
+  
+	// Proviant
+
+IF
+  ActuallyInCombat()
+  HPPercentLT(Myself, 50)
+  HasItem("NQ#MI43", Myself)
+  !StateCheck(Myself, CD_STATE_NOTVALID)
+THEN RESPONSE #100
+  DisplayString(Myself, @8012)    										// frisst Proviant
+  UseItem("NQ#MI43", Myself)
+END
+
+	// 3 Hits ENEMY
+
+IF
+  OR(7)
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    HitBy(Player1, 0)
+    HitBy(Player2, 0)
+    HitBy(Player3, 0)
+    HitBy(Player4, 0)
+    HitBy(Player5, 0)
+    HitBy(Player6, 0)
+  !Allegiance(Myself,ENEMY)
+  GlobalLT("NQ#HITSHUK","LOCALS",3)
+THEN
+  RESPONSE #10
+    FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8001)   									// Idiot!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8002)   									// Fieser Mistkäfer!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8003)   									// Stinkendes Fischgesicht!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8004)   									// Schwitzender Fettsack!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8005)   									// Räudige Zwergenschlampe!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8006)   									// Feuchter Trollfladen!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)		
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8007)   									// Hässliche Koboldfresse!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8008)   									// Elender Menschensohn!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8009)   									// Dreckiger Elfenarsch!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+	FaceObject(Lastattackerof(Myself))
+    DisplayStringHead(Myself, @8010)   									// Sabbernde Ghulbacke!
+	SetGlobalTimer("NQ#YOUHITSHUK","LOCALS",20)
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+END
+
+IF
+  GlobalGT("NQ#HITSHUK","LOCALS",2)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#HITSHUK","LOCALS",0)
+    DisplayStringHead(Myself, @8011)   									// Das reicht, Drecksack!
+	IncrementGlobal("NQ#NICESHUK","GLOBAL",-1)
+	DisplayString(Myself,@8813)										    // Shuks Verhältnis zu Euch hat sich verschlechtert. (-1)
+    Enemy()
+END
+
+IF
+  GlobalTimerExpired("NQ#YOUHITSHUK","LOCALS")
+  !Global("NQ#HITSHUK","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#HITSHUK","LOCALS",0)
+END
+
+
+// Beruhigung, wenn feindlich
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("NQ#SHUKENEMY","LOCALS",0)
+THEN
+  RESPONSE #100
+  	SetGlobalTimer("NQ#SHUKISANGRY","LOCALS",60)
+	DisplayString(Myself, @8013)   										// Shuk ist wütend!
+    SetGlobal("NQ#SHUKENEMY","LOCALS",1)
+END  
+
+IF
+  Global("NQ#SHUKENEMY","LOCALS",1)
+  GlobalTimerExpired("NQ#SHUKISANGRY","LOCALS")
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    ChangeEnemyAlly(Myself, CONTROLLED)
+
+    AddFamiliar()
+    ReallyForceSpellRES("NQ#ORH",Myself)								//  Notwendig um AddFamiliar() "abzuschwächen"...	
+
+    SetGlobal("NQ#SHUKENEMY","LOCALS",0)	
+END
+
+	// 3 Taschendiebstahl ENEMY
+	
+IF
+  PickPocketFailed([PC])
+THEN
+  RESPONSE #10
+    DisplayStringHead(Myself, @8001)   									// Idiot!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8002)   									// Fieser Mistkäfer!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8003)   									// Stinkendes Fischgesicht!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8004)   									// Schwitzender Fettsack!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8005)   									// Räudige Zwergenschlampe!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8006)   									// Feuchter Trollfladen!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)		
+  RESPONSE #10
+    DisplayStringHead(Myself, @8007)   									// Hässliche Koboldfresse!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8008)   									// Elender Menschensohn!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8009)   									// Dreckiger Elfenarsch!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+  RESPONSE #10
+    DisplayStringHead(Myself, @8010)   									// Sabbernde Ghulbacke!
+    IncrementGlobal("NQ#HITSHUK","LOCALS",1)
+END
+
+	// Verhältnis anzeigen
+	
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",1)
+  GlobalLT("NQ#NICESHUK","GLOBAL",1)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8800)											// 	(1.) Shuk hasst Euch aus ganzem Herzen. (0)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",1)
+END
+
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",2)
+  GlobalGT("NQ#NICESHUK","GLOBAL",0)
+  GlobalLT("NQ#NICESHUK","GLOBAL",4)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8801)											// 	(2.) Shuk hasst Euch sehr. (1-3)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",2)
+END
+
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",3)
+  GlobalGT("NQ#NICESHUK","GLOBAL",3)
+  GlobalLT("NQ#NICESHUK","GLOBAL",7)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8802)											// 	(3.) Shuk hasst Euch. (4-6)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",3)
+END
+
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",4)
+  GlobalGT("NQ#NICESHUK","GLOBAL",6)
+  GlobalLT("NQ#NICESHUK","GLOBAL",10)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8803)											// 	(4.) Shuk hasst Euch einigermaßen. (7-9)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",4)
+END
+
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",5)
+  GlobalGT("NQ#NICESHUK","GLOBAL",9)
+  GlobalLT("NQ#NICESHUK","GLOBAL",13)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8804)											// 	(5.) Shuk hasst Euch wenig. (10-12)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",5)
+END
+
+IF
+  !Global("NQ#SHUKBOND","GLOBAL",6)
+  GlobalGT("NQ#NICESHUK","GLOBAL",12)
+THEN
+  RESPONSE #100	
+    DisplayString(Myself,@8805)											// 	(6.) Shuk hasst Euch nicht (13+)
+	SetGlobal("NQ#SHUKBOND","GLOBAL",6)
+END
+
+// Cross, Breagar
+
+IF
+  See("ACGIANT")
+  !Dead("ACGIANT")
+  Global("NQ#ACGIANT","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,@8113)											// 	Ach du Scheiße!
+    SetGlobal("NQ#ACGIANT","LOCALS",1)
+END
+
+// Cross, BGQE, Geisterspinne
+
+IF
+  See("C#Q04009")
+  !Dead("C#Q04009")
+  Global("NQ#C#Q04009","LOCALS",0)
+THEN
+  RESPONSE #100
+    GiveItemCreate("NQ#MI46","C#Q04009",1,1,1)
+    SetGlobal("NQ#C#Q04009","LOCALS",1)
+END

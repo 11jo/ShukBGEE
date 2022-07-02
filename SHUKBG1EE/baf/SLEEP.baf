@@ -1,0 +1,10 @@
+IF
+  Global("NQ#LMS","GLOBAL",1)
+THEN
+  RESPONSE #100
+// DisplayStringHead(Player,@1)				// 		Freie Rast aktiviert.
+    SetAreaRestFlag(1)
+    SetRestEncounterProbabilityDay(0)
+    SetRestEncounterProbabilityNight(0)
+    SetGlobal("NQ#LMS","GLOBAL",0)
+END

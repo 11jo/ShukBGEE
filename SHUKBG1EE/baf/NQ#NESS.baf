@@ -1,0 +1,69 @@
+	// Spawn Eff
+	
+IF
+  Global("SPAWN","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("SPAWN","LOCALS",1)
+	CreateVisualEffectObject("spdispma",Myself)	
+	PlaySound("EFF_M10")
+END
+
+	// Unspawn
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",12)
+  !Time(0)
+  !Detect([PC])
+  !Detect("NQ#SHUK")
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",10)
+	DestroySelf()
+END
+
+	// Wait AR0225
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",19)
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",0)
+THEN
+  RESPONSE #100
+    DropInventory()
+    SaveLocation("LOCALS","MYPOINT",[2297.2044])
+	SetGlobal("HERE","LOCALS",1)
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",19)
+  AreaCheck("AR0225")
+  !NearSavedLocation(Myself,"MYPOINT",3)
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    MoveToSavedLocation("MYPOINT","LOCALS")
+    Continue()
+END
+
+	// Guard
+	
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",16)
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_SLEEP)
+END
+
+	// Shuksworld
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	DropInventory()
+	CreateVisualEffectObject("DDOORH",Myself)
+	DestroySelf()
+END

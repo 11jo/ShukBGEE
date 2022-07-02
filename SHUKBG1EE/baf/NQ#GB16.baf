@@ -1,0 +1,157 @@
+IF
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  StateCheck(Myself,STATE_POISONED)
+  HaveSpell(CLERIC_SLOW_POISON)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_SLOW_POISON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_CALL_LIGHTNING)
+  AreaType(OUTDOOR)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_CALL_LIGHTNING)
+END
+
+IF
+  HaveSpell(CLERIC_CURE_LIGHT_WOUNDS)
+  HPPercentLT(Myself,60)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_CURE_LIGHT_WOUNDS)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_ENTANGLE)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !GlobalTimerNotExpired("BD_Entg","LOCALS")
+  !CheckStatGT(Lastseenby(Myself),0,ENTANGLE)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    SetGlobalTimer("BD_Entg","LOCALS",THREE_ROUNDS)
+    Spell(Lastseenby(Myself),CLERIC_ENTANGLE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_BLESS)
+  !StateCheck(Lastseenby(Myself),STATE_BLESS)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_BLESS)
+END
+
+IF
+  See([EVILCUTOFF])
+  StateCheck(Lastseenby(Myself),STATE_POISONED)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !StateCheck(Lastseenby(Myself),STATE_IMPROVEDINVISIBILITY)
+  !StateCheck(Lastseenby(Myself),STATE_CONFUSED)
+  !StateCheck(Lastseenby(Myself),STATE_CHARMED)
+  !CheckStatGT(Lastseenby(Myself),0,WIZARD_SPELL_DEFLECTION)
+  HaveSpell(CLERIC_SLOW_POISON)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_SLOW_POISON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !GlobalTimerNotExpired("BD_Doom","LOCALS")
+  HaveSpell(CLERIC_DOOM)
+  !StateCheck(Lastseenby(Myself),STATE_NOT_TARGETABLE)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+  !StateCheck(Myself,STATE_SILENCED)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    SetGlobalTimer("BD_Doom","LOCALS",THREE_ROUNDS)
+    Spell(Lastseenby(Myself),CLERIC_DOOM)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_CHARM_PERSON)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+  !Race(Lastseenby(Myself),ELF)
+  !StateCheck(Lastseenby(Myself),STATE_NOT_TARGETABLE)
+  !StateCheck(Lastseenby(Myself),STATE_DISABLED)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_CHARM_PERSON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  StateCheck(Myself,STATE_PANIC)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  Heard([0],111)
+THEN
+  RESPONSE #100
+    MoveToObject(Nearestenemyof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  InWeaponRange(Lastseenby(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+  InWeaponRange(Lastattackerof(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    MoveToObject(Lastseenby(Myself))
+END

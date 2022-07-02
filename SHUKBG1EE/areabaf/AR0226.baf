@@ -1,0 +1,9 @@
+IF
+  Global("NQ#CARRIO","GLOBAL",1)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#CA01",[2725.733],5)				// Zäher Aaskriecherbulle
+  	CreateCreature("NQ#CA01",[2466.2234],2)				// Zäher Aaskriecherbulle
+	CreateCreature("NQ#CA01",[3626.2788],6)				// Zäher Aaskriecherbulle
+    SetGlobal("NQ#CARRIO","GLOBAL",2)
+END

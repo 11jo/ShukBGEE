@@ -1,0 +1,61 @@
+// 1
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",2)
+  Global("SMSEVENT1","LOCALS",0)  
+  InMyArea("NQ#SHUK")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#G271","NQ#SHUK")
+	CreateVisualEffectObject("spdispma",Myself)
+	SetGlobal("SMSEVENT1","LOCALS",1) 
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",2)
+  Global("SMSEVENT1","LOCALS",0)
+  !InMyArea("NQ#SHUK")
+   InMyArea(Player1)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("NQ#G271",Player1)
+    CreateVisualEffectObject("spdispma",Myself)
+	SetGlobal("SMSEVENT1","LOCALS",1) 
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",2)
+  Global("SMSEVENT1","LOCALS",1)
+  Detect("NQ#SHUK")
+  Range("NQ#SHUK",3)
+THEN
+  RESPONSE #100
+    FaceObject("NQ#SHUK")
+	SmallWait(1)
+	SetGlobal("SMSEVENT1","LOCALS",2)
+	StartDialog("NQ#GB27","NQ#SHUK")
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",2)
+  Global("SMSEVENT1","LOCALS",1)
+  !Detect("NQ#SHUK")
+  Detect(Player1)  
+  Range(Player1,3)
+THEN
+  RESPONSE #100
+    FaceObject(Player1)
+	SmallWait(1)
+	SetGlobal("SMSEVENT1","LOCALS",2)
+	StartDialog("NQ#GB27",Player1)
+END
+
+IF
+  OR(2)
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",2)
+  Global("SMSEVENT1","LOCALS",3)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("SPIN413",Myself)
+    DestroySelf() 
+END

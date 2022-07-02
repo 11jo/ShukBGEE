@@ -1,0 +1,179 @@
+// Global("NQ#WARAS","GLOBAL",1)								// Erster Dialog initiiert
+// Global("NQ#WARAS","GLOBAL",2)								// Hilfe nicht zugesagt
+// Global("NQ#WARAS","GLOBAL",3)								// Hilfe zugesagt
+// Global("NQ#WARAS","GLOBAL",4)								// Trank gegeben
+// Global("NQ#WARAS","GLOBAL",5)								// Geheilt, Dialog initiiert
+// Global("NQ#WARAS","GLOBAL",666)								// Angriff
+// Global("NQ#WARAS","GLOBAL",999)								// Gestorben
+
+
+IF
+  !Global("NQ#WARAS","GLOBAL",999)
+  Die()
+THEN
+  RESPONSE #100
+	EraseJournalEntry(@70003)
+	EraseJournalEntry(@70004)
+	EraseJournalEntry(@70005)
+	EraseJournalEntry(@70006)
+	EraseJournalEntry(@70007)
+	EraseJournalEntry(@70008)
+	EraseJournalEntry(@70009)
+	EraseJournalEntry(@70010)
+	EraseJournalEntry(@70011)
+	EraseJournalEntry(@70012)
+	EraseJournalEntry(@70013)
+    AddJournalEntry(@70014,QUEST_DONE)
+	SetGlobal("NQ#WARAS","GLOBAL",999)
+END
+
+// Abgang wenn rekrutiert
+
+IF
+  OR(2)
+  Global("NQ#WARAS","GLOBAL",9)
+  Global("NQ#WARAS","GLOBAL",10)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	CreateVisualEffectObject("DDOORH",Myself)
+	Wait(1)
+    DestroySelf()
+END
+
+// Erster Dialog
+
+IF
+  Global("NQ#WARAS","GLOBAL",0)
+  See([PC])
+  CombatCounter(0)
+  !See([ENEMY])
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !StateCheck(Lastseenby(Myself),CD_STATE_NOTVALID)  
+  Range(Lastseenby(Myself),10)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#WARAS","GLOBAL",1)							// Erster Dialog initiiert
+    StartDialog("NQ#WARAS",Lastseenby(Myself))
+END
+
+// Verletzung
+
+IF
+  Global("NEEDTOSLEEP","LOCALS",0)
+  GlobalLT("NQ#WARAS","GLOBAL",3)
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_SLEEP)
+    SetGlobal("NEEDTOSLEEP","LOCALS",1)
+    SetGlobalTimer("NEEDISLEEP","LOCALS",5)
+END
+
+IF
+  GlobalTimerExpired("NEEDISLEEP","LOCALS")
+  GlobalLT("NQ#WARAS","GLOBAL",3)
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+END
+
+// Heilung - durch Zauber
+  
+IF
+  GlobalGT("NQ#WARAS","GLOBAL",1)
+  GlobalLT("NQ#WARAS","GLOBAL",4)
+
+  HPPercentGT(Myself,60)
+  See(Player1)
+  CombatCounter(0)
+  !See([ENEMY])
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !StateCheck(Lastseenby(Myself),CD_STATE_NOTVALID)
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NQ#WARAS","GLOBAL",5)
+	AddJournalEntry(@70008,QUEST)
+	Wait(2)
+END
+
+IF
+  GlobalLT("NQ#WARAS","GLOBAL",2)						// Noch kein Gespräch
+  HPPercentGT(Myself,60)
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NQ#WARAS","GLOBAL",5)
+	AddJournalEntry(@70009,QUEST)
+	Wait(2)
+END
+
+// Heilung - durch Trank
+
+IF
+  Global("NQ#WARAS","GLOBAL",4)							// Trank im Gespräch gegeben
+THEN
+  RESPONSE #100
+  	CreateItem("POTN52",1,1,1)
+    UseItem("POTN52",Myself)
+	Wait(2)
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NQ#WARAS","GLOBAL",5)
+	Wait(2)
+END
+
+// Heilung - Gespräch
+
+IF
+  Global("NQ#WARAS","GLOBAL",5)
+  See(Player1)
+  CombatCounter(0)
+  !See([ENEMY])
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !StateCheck(Lastseenby(Myself),CD_STATE_NOTVALID)
+THEN
+  RESPONSE #100
+	FaceObject(Player1)
+	Wait(1)
+	SetGlobal("NQ#WARAS","GLOBAL",6)
+	StartDialog("NQ#WARAS",Lastseenby(Myself))
+END 
+
+IF
+  Global("NQ#WARAS","GLOBAL",5)
+  !See(Player1)
+  See([PC])
+  CombatCounter(0)
+  !See([ENEMY])
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !StateCheck(Lastseenby(Myself),CD_STATE_NOTVALID)
+THEN
+  RESPONSE #100
+	FaceObject([PC])
+	Wait(1)
+	SetGlobal("NQ#WARAS","GLOBAL",6)
+	StartDialog("NQ#WARAS",Lastseenby(Myself))
+END  
+  
+// Kampf, wenn Eber in der Nähe
+
+IF
+  See("NQ#EBR01")
+  Global("NOMOREPIG","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,@80001)
+	AttackReevaluate("NQ#EBR01",30)
+	SetGlobal("NOMOREPIG","LOCALS",1)
+END
+
+IF
+  See("NQ#EBR01")
+  GlobalGT("NOMOREPIG","LOCALS",0)
+THEN
+  RESPONSE #100
+	AttackReevaluate("NQ#EBR01",30)
+END 

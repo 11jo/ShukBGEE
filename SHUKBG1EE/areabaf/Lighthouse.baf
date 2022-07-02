@@ -1,0 +1,19 @@
+IF
+  Global("NQ#WARASSPAWN","GLOBAL",0)					// Kein Spawn
+  PartyHasItem("NQ#SHUK")								// Goblinstein im Besitz
+  CheckStatGT(Player1,5,Level)							// Level Player1 mindestens 6
+  Global("NQ#WARAS","GLOBAL",0)							// Kein Gespräch mit Waras geführt
+  AreaCheck("%Lighthouse%")								// Leuchtturm
+THEN
+  RESPONSE #100
+	PlaySound("WWOLF03")
+    CreateCreature("NQ#WARAS",[2977.1323],4)			// WARAS
+	CreateCreature("NQ#NARTZ",[2923.1426],8)			// NARTZ
+	CreateCreature("NQ#GNL13",[2872.811],0)				// Toter Gnoll		Oben
+	CreateCreature("NQ#GNL13",[2918.1174],14)			// Toter Gnoll		Mitte 1
+	CreateCreature("NQ#GNL13",[2805.1320],12)			// Toter Gnoll		Mitte 2
+	CreateCreature("NQ#GNL13",[3226.1527],6)			// Toter Gnoll		Unten (runtergefallen)
+	DisplayString(Player1,@8503)						// Als Ihr das Gebiet betretet hört Ihr ein schauriges Geheul. In der Nähe scheint sich ein verletzter Wolf oder eine noch gefährlichere Wolfskreatur zu befinden.
+	AddJournalEntry(@70005,QUEST)						// Ein schauriges Geheul -  Ich habe das Geheul einer verletzten Wolfkreatur gehört. Sie scheint sich im nördlichen Teil des Gebiets mit dem Leuchtturm zu befinden. 
+    SetGlobal("NQ#WARASSPAWN","GLOBAL",3)				// Spawn Leuchtturm aktiv	
+END

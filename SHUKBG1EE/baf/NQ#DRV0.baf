@@ -1,0 +1,72 @@
+IF
+  Die()
+  !Class(Player1,DRUID_ALL)
+THEN
+  RESPONSE #100
+    AddexperienceParty(3000)
+    EraseJournalEntry(@70026)
+    AddJournalEntry(@70027,QUEST)
+END
+
+IF
+  Die()
+  Class(Player1,DRUID_ALL)
+THEN
+  RESPONSE #100
+    AddexperienceParty(3000)
+    EraseJournalEntry(@70026)
+    AddJournalEntry(@70028,QUEST)
+END
+
+// show
+
+IF
+  GlobalLT("NQ#RAKI","GLOBAL",8)
+  See("NQ#GB14") 
+THEN
+  RESPONSE #100
+      ClearAllActions()
+	  FaceObject(Lastseenby(Myself))
+      ReallyForceSpellRES("NQ#DRV0",Lastseenby(Myself))
+	  SetGlobal("SAYHELLO","LOCALS",1)
+	  SetGlobal("NQ#RAKI","GLOBAL",8)
+END
+
+// spl
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR407")
+THEN
+  RESPONSE #100
+    SpellRES("SPPR407",Myself)						// Schutz vor Blitzen
+END	
+
+IF
+  HPPercentLT(Myself,80)
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR319")
+THEN
+  RESPONSE #100
+    SpellRES("SPPR319",Nearestenemyof(Myself))		// Insekten herbeirufen
+END
+	
+IF
+  HPPercentLT(Myself,50)
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR105")
+THEN
+  RESPONSE #100
+    SpellRES("SPPR105",Nearestenemyof(Myself))		// Verstrickung
+END
+	
+IF
+  HPPercentLT(Myself,30)
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR517")
+THEN
+  RESPONSE #100
+    SpellRES("SPPR517",Nearestenemyof(Myself))		// Insektenplage
+END	
+
+

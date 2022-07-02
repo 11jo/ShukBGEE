@@ -1,0 +1,286 @@
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    IncrementGlobal("GOBLINS_KILLED","GLOBAL",1)
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)
+	DestroySelf()
+END
+
+IF
+  Global("NQ#RAKI","GLOBAL",9)
+  Global("SWINGSWING","LOCALS",0)
+THEN
+  RESPONSE #50
+    Face(8)
+  	Swing()
+	Wait(1)
+	Face(8)
+	Swing()
+	Wait(1)
+	Face(9)
+	Swing()
+	Wait(1)
+	SetGlobal("SWINGSWING","LOCALS",0)
+  RESPONSE #50
+    Face(9)
+  	Swing()	
+	Wait(2)
+	Face(9)
+	Swing()
+	Wait(1)
+	Face(8)
+	Swing()
+	Wait(1)
+	SetGlobal("SWINGSWING","LOCALS",0)
+END 
+
+IF
+  Global("NQ#RAKI","GLOBAL",9)
+  Global("SWINGSWING","LOCALS",1)
+THEN
+  RESPONSE #50
+    Face(8)
+  	Swing()
+	Wait(1)
+	Face(7)
+	Swing()
+	Wait(2)
+	Face(7)
+	Swing()
+	Wait(1)
+	SetGlobal("SWINGSWING","LOCALS",0)
+  RESPONSE #50
+    Face(7)
+  	Swing()
+	Wait(2)
+    Face(7)
+	Swing()
+	Wait(1)
+	Face(8)
+	Swing()
+	Wait(2)
+	SetGlobal("SWINGSWING","LOCALS",0)
+END 
+
+IF
+  GlobalLT("NQ#RAKI","GLOBAL",7)
+  OR(2)
+    Die()
+    Global("GOBLINS_HOSTILE","OH2000",1)
+THEN
+  RESPONSE #100
+	SetGlobal("NQ#RAKI","GLOBAL",666)
+	AddJournalEntry(@70030,QUEST)
+END
+
+// Bäume fällen
+
+IF
+  !Allegiance(Myself,ENEMY)
+  !Global("GOBLINS_HOSTILE","OH2000",1)
+  See("NQ#SHUK")
+  Range(Lastseenby(Myself),10)
+  Global("NQ#RAKI","GLOBAL",2)
+  Global("NQ#RAKI","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#RAKI","GLOBAL",3)
+    SetGlobal("NQ#RAKI","LOCALS",1)			// Arbeiter 1
+	DisplayStringHead(Myself, @80003)
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","GLOBAL",3)
+  Global("NQ#RAKI","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#RAKI","GLOBAL",4)
+    SetGlobal("NQ#RAKI","LOCALS",2)			// Arbeiter 2
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","GLOBAL",4)
+  Global("NQ#RAKI","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#RAKI","GLOBAL",5)
+    SetGlobal("NQ#RAKI","LOCALS",3)			// Arbeiter 3
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",1)
+THEN
+  RESPONSE #100
+    MoveToPoint([1638.1375])
+	Wait(1)
+	SetGlobal("NQ#RAKI","LOCALS",4)			// Arbeiter 1.1
+END
+	
+IF
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",2)
+THEN
+  RESPONSE #100
+    MoveToPoint([1754.1435])
+	Wait(1)
+	SetGlobal("NQ#RAKI","LOCALS",5)			// Arbeiter 2.1
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",3)
+THEN
+  RESPONSE #100
+    MoveToPoint([1839.1448])
+	Wait(1)
+	SetGlobal("NQ#RAKI","LOCALS",6)			// Arbeiter 3.1
+END
+
+IF
+  Or(2)
+  See([PC])
+  See("NQ#SHUK")
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",4)
+THEN
+  RESPONSE #100
+    MoveToPoint([1638.1375])
+    Face(8)
+	Swing()
+	Wait(1)
+	Swing()
+	Wait(1)
+	Swing()
+	Wait(2)
+    SetGlobal("NQ#RAKI","LOCALS",7)			// Arbeiter 1.2
+	SetGlobal("NQ#RAKI","GLOBAL",6)
+	DisplayStringHead(Myself, @80004)
+END  
+
+IF
+  Or(2)
+  See([PC])
+  See("NQ#SHUK")
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",5)
+THEN
+  RESPONSE #100
+    MoveToPoint([1754.1435])
+    Face(8)
+	Wait(1)
+	Swing()
+	Wait(1)
+	Swing()
+	Wait(1)
+	Swing()
+	SetGlobal("NQ#RAKI","LOCALS",8)				// Arbeiter 2.2
+END
+
+IF
+  Or(2)
+  See([PC])
+  See("NQ#SHUK")
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#RAKI","LOCALS",6)
+THEN
+  RESPONSE #100
+    MoveToPoint([1839.1448])
+    Face(12)
+	Swing()
+	Wait(1)
+	Swing()
+	Wait(1)
+	Swing()
+	SetGlobal("NQ#RAKI","LOCALS",9)				// Arbeiter 3.2
+END 
+
+IF
+  Global("NQ#RAKI","GLOBAL",8)
+THEN
+  RESPONSE #100
+    EscapeArea()
+END
+ 
+// Angriffe durch andere Goblins unterbinden
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), Attack(Nearestenemyof(Myself))
+END
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), NoAction())
+END
+
+// Kampf
+
+IF
+  StateCheck(Myself,STATE_PANIC)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    EquipMostDamagingMelee()
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+// NEGOBLIN ohne OH2010 // Ausnahme drvo
+
+IF
+  Heard([0],911)
+  AreaCheck("OH2000")
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Enemy()
+    Continue()
+END
+
+IF
+  AreaCheck("OH2000")
+  Global("GOBLINS_HOSTILE","OH2000",1)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Enemy()
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  AreaCheck("OH2000")
+  !Global("NQ#RAKI","GLOBAL",7)
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Shout(911)
+    Enemy()
+    Continue()
+END

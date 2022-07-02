@@ -1,0 +1,10 @@
+IF
+  Global("NQ#SALVASPAWN","AR2300",0)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#SALVA",[4564.2158],3)			// Salvan Flavinius
+    CreateCreature("NQ#STH1",[4424.2116],13)		    // Amber Lovegold
+	CreateCreature("NQ#STH2",[4450.2183],10)			// Leibwächter
+	CreateCreature("NQ#STH3",[4548.2254],8)				// Leibwächter
+    SetGlobal("NQ#SALVASPAWN","AR2300",1)
+END

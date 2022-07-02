@@ -1,0 +1,18 @@
+IF
+  AreaCheck("OH2000")
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+  Global("NQ#GO","LOCALS",0)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    IncrementGlobal("GOBLINS_KILLED","GLOBAL",1)
+	SetGlobal("NQ#GO","LOCALS",1)
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)
+END
+
+IF
+  Global("NQ#GO","LOCALS",1)
+THEN
+  RESPONSE #100
+	DestroySelf()
+END

@@ -1,0 +1,107 @@
+// NQ#GB11
+
+IF
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  Allegiance(Myself,NEUTRAL)
+THEN
+  RESPONSE #100
+    Enemy()
+	SetGlobal("NQ#PAEK","GLOBAL",3)
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+  Global("NQ#PAEK","GLOBAL",3)
+THEN
+  RESPONSE #100
+    Enemy()
+END
+
+// Angriffe durch andere Goblins unterbinden
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), Attack(Nearestenemyof(Myself))
+END
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), NoAction())
+END
+
+// Mulm
+
+IF
+  Name("NQ#GB11",Myself)
+  See("NQ#SHUK")
+  !StateCheck(Lastseenby(Myself),STATE_INVISIBLE)
+  !StateCheck(Lastseenby(Myself),STATE_IMPROVEDINVISIBILITY)
+  Allegiance(Myself,NEUTRAL)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Lastseenby(Myself))  
+END  
+
+// Kampf
+
+IF
+  StateCheck(Myself,STATE_PANIC)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !Range(Nearestenemyof(Myself),5)
+THEN
+  RESPONSE #100
+    EquipRanged()
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  Range(Nearestenemyof(Myself),5)
+THEN
+  RESPONSE #100
+    EquipMostDamagingMelee()
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+// NEGOBLIN passiv ohne OH2010
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    IncrementGlobal("GOBLINS_KILLED","GLOBAL",1)
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)							//
+	DestroySelf()
+END
+
+IF
+  AreaCheck("OH2000")
+  Global("GOBLINS_HOSTILE","OH2000",1)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Enemy()
+    Continue()
+END

@@ -1,0 +1,19 @@
+IF
+  AreaCheck("AR0225")
+  GlobalGT("NQ#SHUKRATCHILD","GLOBAL",4)
+  HP(Myself,3)
+  Race(Myself,human)
+  Gender(Myself,male)
+  Alignment(Myself,neutral)
+  Class(Myself,innocent)
+  CheckStat(Myself,9,STR)
+  CheckStat(Myself,9,DEX)
+  CheckStat(Myself,9,CON)
+  CheckStat(Myself,9,INT)
+  CheckStat(Myself,9,WIS)
+  CheckStat(Myself,9,CHR)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	DestroySelf()
+END

@@ -1,0 +1,36 @@
+// Kein Spawn, wenn nicht Player1
+
+IF
+  Global("NQ#SHU","GLOBAL",1)
+  Global("NQ#SHUKSPAWN","GLOBAL",0)
+  !HasItem("NQ#SHUK",Player1)			// Player 2-6
+THEN
+  RESPONSE #100
+  	DisplayString(Myself,@8300)			// Der Stein kann nur durch <CHARNAME> verwendet werden.
+    SetGlobal("NQ#SHU","GLOBAL",0)
+END
+
+// Spawn durch Player1
+
+IF
+  Global("NQ#SHU","GLOBAL",1)
+  Global("NQ#SHUKSPAWN","GLOBAL",0)
+  HasItem("NQ#SHUK",Player1)			// Player 1
+  !Exists("NQ#SHUK")					// Neue Beschwörung			// ???
+THEN
+  RESPONSE #100
+    CreateCreatureObject("NQ#SHUK",Player1,-1,-1,-1)
+    SetGlobal("NQ#SHU","GLOBAL",2)
+END
+
+IF
+  Global("NQ#SHU","GLOBAL",1)
+  Global("NQ#SHUKSPAWN","GLOBAL",0)
+  HasItem("NQ#SHUK",Player1)			// Player 1
+  Exists("NQ#SHUK")						// Alte Beschwörung
+THEN
+  RESPONSE #100
+    MoveGlobalObject("NQ#SHUK",Player1)
+	SetGlobal("NQ#SHUKUNSPAWN","GLOBAL",0)							// ???
+    SetGlobal("NQ#SHU","GLOBAL",25)
+END

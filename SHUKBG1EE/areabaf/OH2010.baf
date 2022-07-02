@@ -1,0 +1,32 @@
+IF
+  Global("NQ#IZVO","GLOBAL",9)
+  NumItemsPartyGT("NQ#CHI2",4)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#SPI05",[1031.1121],2)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[995.1091],1)			    // Kleine Spinne
+	CreateCreature("NQ#SPI05",[959.1075],0)			    // Kleine Spinne
+	CreateCreature("NQ#SPI05",[914.1062],15)			// Kleine Spinne	
+	CreateCreature("NQ#SPI05",[670.1269],12)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[644.1284],13)			// Kleine Spinne	
+	CreateCreature("NQ#SPI05",[1612.1765],7)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[1605.1811],5)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[1534.1833],6)			// Kleine Spinne	
+	CreateCreature("NQ#SPI05",[1948.1038],7)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[2003.1056],5)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[1951.1086],6)			// Kleine Spinne
+	CreateCreature("NQ#SPI05",[2016.1110],6)			// Kleine Spinne
+	CreateCreature("NQ#SPI06",[1022.1008],0)			// Kleine Spinne
+    SetGlobal("NQ#IZVO","GLOBAL",10)
+END
+
+IF
+  Global("NQ#PAEK","GLOBAL",6)
+  Global("NQ#BARSPAWN","OH2010",0)
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#BAR1",[939.1419],0)				// Explosives Fass
+	CreateCreature("NQ#BAR1",[1095.1281],0)			    // Explosives Fass
+	CreateCreature("NQ#BAR1",[1205.1465],0)			    // Explosives Fass
+    SetGlobal("NQ#BARSPAWN","OH2010",1)
+END

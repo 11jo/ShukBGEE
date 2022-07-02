@@ -1,0 +1,94 @@
+
+// Global("NQ#NESS1","AR0225",2)					Eff. AR225 + Cloud
+// Global("NQ#NESS1","AR0225",3)					Eff. AR225 + Cloud unterbinden, weil Spieler in AR0200 sichtbar
+
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",1)		Spawne Schleicher
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",2)		Spawne Schleicher
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",3)		Schleicher gespawnt
+
+
+
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",4)		
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",5)		Mit Kruck gesprochen / Kill Kruck
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",6)		Map Note Kruck entfernt
+
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",7)		Aufgabe angenommen (ode auch nicht)
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",8)		AR0225:	MapMarker gesetzt (Ort des Angriffs)
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",9)		AR0200: Spy gespawnt
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",10)		AR0200: Spy Script zugewiesen
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",11)		Nelvin gespawnt
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",12)		Nelvin unspawn
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",13)		Gespräch Nelvin 1
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",14)		Weggeschickt
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",15)		Weggeschickt, Gold abgeknöpft
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",16)		Wache ausliefern
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",17)		Goblins ausliefern
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",18)		Goblins (Verwandten) ausliefern
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",19)		Goblins ausgeliefert, Shuk nicht da
+// Global("NQ#SHUKSPALACEEVENT1","GLOBAL",20)		Goblins ausgeliefert, Shuk mitgenommen
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",12)
+THEN
+  RESPONSE #100
+    DestroySelf()
+END
+
+IF
+  !Global("NQ#SHUKSPALACEEVENT1","GLOBAL",16)
+  HasItem("NQ#SEE",Myself)
+THEN
+  RESPONSE #100
+    DestroyItem("NQ#SEE")
+END
+
+IF
+  AreaCheck("AR0200")
+  Time(0)
+  !See([PC])
+  !See("NQ#SHUK")
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",10)
+  !Dead("NQ#NESS")
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#NESS",[3261.1126],4)				// Nelvin Nessler
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+END
+
+IF
+  AreaCheck("AR0200")
+  TimeOfDay(2)
+  Global("NQ#NESS1","GLOBAL",2)							// Eimer
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",10)
+  !Dead("NQ#NESS")
+THEN
+  RESPONSE #100
+    CreateCreature("NQ#NESS",[3261.1126],4)				// Nelvin Nessler
+	SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+END
+
+IF
+  Global("NQ#SHUKSPALACEEVENT1","GLOBAL",11)
+  !TimeOfDay(2)
+  !Detect([PC])
+  !Detect("NQ#SHUK")
+THEN
+  RESPONSE #100
+    SetGlobal("NQ#SHUKSPALACEEVENT1","GLOBAL",12)		// Unspawn Nelvin
+END
+
+
+
+//IF
+//  AreaCheck("AR0200")
+  //Time(0)
+  //OR(2)
+  //See([PC])
+  //See("NQ#SHUK")
+  //OR(2)
+  //Global("NQ#SHUKSPALACEEVENT1","GLOBAL",13)
+  //Global("NQ#SHUKSPALACEEVENT1","GLOBAL",14)
+//THEN
+  //RESPONSE #100
+	//SetGlobal("NQ#NESS1","GLOBAL",3)
+//END

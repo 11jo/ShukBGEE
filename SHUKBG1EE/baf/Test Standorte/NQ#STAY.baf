@@ -1,0 +1,215 @@
+IF
+  Global("NQ#SHUKRATCHILD","GLOBAL",666)
+  !Name("NQ#GB10",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)
+	DestroySelf()
+END
+
+IF
+  !AreaCheck("AR0225")
+THEN
+  RESPONSE #100
+    EscapeAreaMove("AR0225",2066,2055,14)
+END
+
+IF
+  AreaCheck("AR0225")
+  Global("HERE","LOCALS",0)
+THEN
+  RESPONSE #100
+    SaveObjectLocation("LOCALS","MYPOINT",Myself)
+	SetGlobal("HERE","LOCALS",1)
+	ReallyForceSpellRES("NQ#ORH",Myself)
+    Continue()
+END
+
+IF
+  AreaCheck("AR0225")
+  !NearSavedLocation(Myself,"MYPOINT",3)
+  !StateCheck(Myself,CD_STATE_NOTVALID)
+  !See(Nearestenemyof(Myself))
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    MoveToSavedLocation("MYPOINT","LOCALS")
+    Continue()
+END
+
+IF
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Enemy()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Name("NQ#GB24",Myself)
+  Global("STUFF","LOCALS",0)
+THEN
+  RESPONSE #100
+	CreateItem("ax1h01",1,0,0)
+    CreateItem("shld03",1,0,0)
+    SetGlobal("STUFF","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Name("NQ#GB25",Myself)
+  Global("STUFF","LOCALS",0)
+THEN
+  RESPONSE #100
+    CreateItem("bow05",1,0,0)
+	CreateItem("dagg01",1,0,0)
+	CreateItem("arow01",20,0,0)
+    SetGlobal("STUFF","LOCALS",1)
+END
+
+IF
+  !Allegiance(Myself,GOODBUTBLUE)
+  Name("NQ#GB10",Myself)
+  Global("MORTAL","LOCALS",0)
+THEN
+  RESPONSE #100
+    DestroyItem("MINHP1")
+	SetGlobal("MORTAL","LOCALS",1)
+    Enemy()
+END
+
+// Respawn
+
+IF
+  Die()
+  Allegiance(Myself,GOODBUTBLUE)
+  Name("NQ#GB24",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    CreateCreatureObject("NQ#GB24",Myself,0,0,0)
+	Kill(Myself)
+END
+
+IF
+  Die()
+  Allegiance(Myself,GOODBUTBLUE)
+  Name("NQ#GB25",Myself)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    CreateCreatureObject("NQ#GB25",Myself,0,0,0)
+	Kill(Myself)
+END
+
+// Name
+
+IF
+  NearLocation(Myself,2200,1695,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8901)
+//    SetGlobal("WHOAMI","LOCALS",1)
+END
+
+IF
+  NearLocation(Myself,1720,1888,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8902)
+//     SetGlobal("WHOAMI","LOCALS",2)
+END
+
+IF
+  NearLocation(Myself,2420,1803,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8903)
+//     SetGlobal("WHOAMI","LOCALS",3)
+END
+
+IF
+  NearLocation(Myself,2621,1905,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8904)
+//     SetGlobal("WHOAMI","LOCALS",4)
+END
+
+IF
+  NearLocation(Myself,2570,2032,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8905)
+//     SetGlobal("WHOAMI","LOCALS",5)
+END
+
+IF
+  NearLocation(Myself,2089,2162,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8906)
+//     SetGlobal("WHOAMI","LOCALS",6)
+END
+
+IF
+  NearLocation(Myself,1909,2068,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8907)
+//     SetGlobal("WHOAMI","LOCALS",7)
+END
+
+IF
+  NearLocation(Myself,2296,1864,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8908)
+//     SetGlobal("WHOAMI","LOCALS",8)
+END
+
+IF
+  NearLocation(Myself,1785,2098,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8909)
+//     SetGlobal("WHOAMI","LOCALS",9)
+END
+
+IF
+  NearLocation(Myself,2792,2104,1)
+  Global("WHOAMI","LOCALS",0)
+THEN
+  RESPONSE #100
+  DisplayStringHead(Myself, @8910)
+//     SetGlobal("WHOAMI","LOCALS",10)
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

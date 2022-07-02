@@ -1,0 +1,61 @@
+// Verletzung
+
+IF
+  Global("NEEDTOSLEEP","LOCALS",0)
+  !ActuallyInCombat()
+THEN
+  RESPONSE #100
+    SetSequence(SEQ_SLEEP)
+    SetGlobal("NEEDTOSLEEP","LOCALS",1)
+    SetGlobalTimer("NEEDISLEEP","LOCALS",20)
+END
+
+IF
+  GlobalTimerExpired("NEEDISLEEP","LOCALS")
+  !ActuallyInCombat()
+  Detect([PC])
+THEN
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+	DisplayStringHead(Myself,@80006)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+	DisplayStringHead(Myself,@80007)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+	DisplayStringHead(Myself,@80008)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+END
+
+IF
+  GlobalTimerExpired("NEEDISLEEP","LOCALS")
+  !ActuallyInCombat()
+  !Detect([PC])
+THEN
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+  RESPONSE #25
+    SetSequence(SEQ_AWAKE)
+    SetGlobal("NEEDTOSLEEP","LOCALS",0)
+END
+
+// Die
+
+IF
+  GlobalGT("NQ#SHUKSPALACEEVENT1","GLOBAL",4)
+THEN
+  RESPONSE #100
+	Kill(Myself)
+END

@@ -1,0 +1,8 @@
+IF
+  !Global("NQ#SHUKBIGSPIDER","GLOBAL",3)
+  Global("HelpLandrin","GLOBAL",3)
+THEN
+  RESPONSE #100
+    AddJournalEntry(@70002,QUEST_DONE)
+    SetGlobal("NQ#SHUKBIGSPIDER","GLOBAL",4)
+END

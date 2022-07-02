@@ -1,0 +1,21 @@
+// Global("NQ#WARASSPAWN","GLOBAL",1)			Räuberlager (AR1900)
+// Global("NQ#WARASSPAWN","GLOBAL",2)			Tempel (AR3400)
+// Global("NQ#WARASSPAWN","GLOBAL",3)			Leuchturm (Spawn durch baldurs.bcs)
+
+IF
+  Global("NQ#WARASSPAWN","GLOBAL",0)					// Kein Spawn
+  PartyHasItem("NQ#SHUK")								// Goblinstein im Besitz
+  CheckStatGT(Player1,5,Level)							// Level Player1 mindestens 6
+  Global("NQ#WARAS","GLOBAL",0)							// Kein Gespräch mit Waras geführt
+THEN
+  RESPONSE #100
+    PlaySound("WWOLF03")
+    CreateCreature("NQ#WARAS",[3404.3500],4)			// WARAS
+	CreateCreature("NQ#NARTZ",[3310.3412],0)			// NARTZ
+	CreateCreature("NQ#BD13",[2921.3339],12)			// Toter Bandit		Mitte links
+	CreateCreature("NQ#BD13",[3258.3208],14)			// Toter Bandit		Oben
+	CreateCreature("NQ#BD13",[3310.3562],10)			// Toter Bandit
+	DisplayString(Player1,@8503)						// Als Ihr das Gebiet betretet hört Ihr ein schauriges Geheul. In der Nähe scheint sich ein verletzter Wolf oder eine noch gefährlichere Wolfskreatur zu befinden.
+	AddJournalEntry(@70004,QUEST)						// Ein schauriges Geheul -  Ich habe das Geheul einer verletzten Wolfkreatur gehört. Sie scheint sich im südlichen Teil des Gebiets um den Tempel von Beregost zu befinden. 
+    SetGlobal("NQ#WARASSPAWN","GLOBAL",2)				// Spawn Tempel aktiv
+END	

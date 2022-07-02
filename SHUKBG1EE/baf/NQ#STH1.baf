@@ -1,0 +1,145 @@
+IF
+  Global("NQ#GOHOME","LOCALS",1)
+THEN
+  RESPONSE #100
+    EscapeArea()
+	ActionOverride("NQ#STH1", EscapeArea())
+	ActionOverride("NQ#STH2", EscapeArea())
+	ActionOverride("NQ#STH3", EscapeArea())
+    SetGlobal("NQ#GOHOME","LOCALS",2)
+END
+
+IF
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  !Allegiance(Myself,ENEMY)
+  Global("NQ#FIGHT","LOCALS",0)
+THEN
+  RESPONSE #100
+    Enemy()
+	SetGlobal("NQ#FIGHT","LOCALS",1)
+END
+
+IF
+  Global("NQ#FIGHT","LOCALS",1)
+THEN
+  RESPONSE #100
+	ActionOverride("NQ#STH1", Enemy())
+	ActionOverride("NQ#STH2", Enemy())
+	ActionOverride("NQ#STH3", Enemy())
+    SetGlobal("NQ#FIGHT","LOCALS",2)
+END
+
+IF
+  GlobalGT("NQ#GOHOME","LOCALS",0)
+  Die()
+THEN
+  RESPONSE #100
+    ReputationInc(-2)
+END
+
+IF
+  Dead("NQ#SALVA")
+  HasItem("NQ#SHUK",Myself)
+THEN
+  RESPONSE #100
+    DropItem("NQ#SHUK",[-1.-1])
+    EscapeArea()
+END
+
+IF
+  Dead("NQ#SALVA")
+  !HasItem("NQ#SHUK",Myself)
+THEN
+  RESPONSE #100
+    EscapeArea()
+END
+
+// spl
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR110")
+  Global("blunt","LOCALS",0)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR110", Myself)
+	SetGlobal("blunt","LOCALS",1)
+END
+
+IF
+  OR(6)
+  See(Nearestenemyof(Myself))
+  See(Secondnearestenemyof(Myself))
+  See(ThirdNearestEnemyOf(Myself))
+  See(FourthNearestEnemyOf(Myself))
+  See(FourthNearestEnemyOf(Myself))
+  See(FifthNearestEnemyOf(Myself))
+  See(SixthNearestEnemyOf(Myself))
+  HaveSpellRES("SPPR102")
+  HPLT(Lastseenby(Myself),6)
+  CheckStatLT(Lastseenby(Myself),6,HELD) 
+  !StateCheck(Lastseenby(Myself),STATE_STUNNED)
+  !StateCheck(Lastseenby(Myself),STATE_CONFUSED)
+  !StateCheck(Lastseenby(Myself),STATE_SLEEPING)
+  !StateCheck(Lastseenby(Myself),STATE_PANIC)
+  !StateCheck(Lastseenby(Myself),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR102", Myself)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR113")
+THEN
+  RESPONSE #100
+    SpellRES("SPPR113", Lastseenby(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR103")
+  HPPercentLT(Myself,30)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR103",Myself)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR103")
+  See("NQ#STH02")
+  HPPercentLT(Lastseenby(Myself),50)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR103",Myself)
+END
+
+IF
+  !See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR103")
+  HPPercentLT(Myself,90)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR103",Myself)
+END
+
+IF
+  !See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR103")
+  See("NQ#STH03")
+  HPPercentLT(Lastseenby(Myself),100)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR103",Myself)
+END
+
+IF
+  !See(Nearestenemyof(Myself))
+  HaveSpellRES("SPPR103")
+  See("NQ#STH02")
+  HPPercentLT(Lastseenby(Myself),70)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR103",Myself)
+END

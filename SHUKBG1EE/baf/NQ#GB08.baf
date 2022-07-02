@@ -1,0 +1,141 @@
+IF
+  Die()
+  GlobalLT("NQ#RAKI","GLOBAL",9)	
+THEN
+  RESPONSE #100
+    EraseJournalEntry(@70016)
+	EraseJournalEntry(@70017)
+	EraseJournalEntry(@70018)
+	EraseJournalEntry(@70019)
+	EraseJournalEntry(@70020)
+	EraseJournalEntry(@70021)
+	EraseJournalEntry(@70022)
+	EraseJournalEntry(@70023)
+	EraseJournalEntry(@70024)
+	EraseJournalEntry(@70025)
+	EraseJournalEntry(@70026)
+	EraseJournalEntry(@70027)
+	EraseJournalEntry(@70028)
+	EraseJournalEntry(@70029)
+	EraseJournalEntry(@70030)
+	EraseJournalEntry(@70031)
+	EraseJournalEntry(@70032)
+	EraseJournalEntry(@70033)
+	EraseJournalEntry(@70034)
+	EraseJournalEntry(@70035)
+	AddJournalEntry(@70015,QUEST_DONE)
+    SetGlobal("NQ#RAKI","GLOBAL",50)
+	SetGlobal("NQ#GOBLINCREW","GLOBAL",50)
+END
+
+// Angriffe durch andere Goblins unterbinden
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), Attack(Nearestenemyof(Myself))
+END
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), NoAction())
+END
+
+// Kampf
+
+IF
+  StateCheck(Myself,STATE_PANIC)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !Range(Nearestenemyof(Myself),5)
+THEN
+  RESPONSE #100
+    EquipRanged()
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  Range(Nearestenemyof(Myself),5)
+THEN
+  RESPONSE #100
+    EquipMostDamagingMelee()
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+// NEGOBLIN ohne OH2010
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    IncrementGlobal("GOBLINS_KILLED","GLOBAL",1)
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)							//
+	DestroySelf()
+END
+
+IF
+  Heard([0],911)
+  AreaCheck("OH2000")
+  Global("NOBACK","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Enemy()
+    Continue()
+END
+
+IF
+  AreaCheck("OH2000")
+  Global("GOBLINS_HOSTILE","OH2000",1)
+  !Allegiance(Myself,ENEMY)
+  Global("NOBACK","LOCALS",0)
+THEN
+  RESPONSE #100
+    Enemy()
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  AreaCheck("OH2000")
+  Global("NOBACK","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Shout(911)
+    Enemy()
+    Continue()
+END
+
+IF
+  AreaCheck("OH2000")
+  See([ENEMY])
+  !Allegiance(Myself,ENEMY)
+  Global("NOBACK","LOCALS",0)
+THEN
+  RESPONSE #100
+    Attack([ENEMY])
+END
+

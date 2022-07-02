@@ -1,0 +1,288 @@
+IF
+  Die()
+  GlobalLT("NQ#GOBLINCREW","GLOBAL",5)
+THEN
+  RESPONSE #100
+    EraseJournalEntry(@70016)
+	EraseJournalEntry(@70017)
+	EraseJournalEntry(@70018)
+	EraseJournalEntry(@70019)
+	EraseJournalEntry(@70020)
+	EraseJournalEntry(@70021)
+	EraseJournalEntry(@70022)
+	EraseJournalEntry(@70023)
+	EraseJournalEntry(@70024)
+	EraseJournalEntry(@70025)
+	EraseJournalEntry(@70026)
+	EraseJournalEntry(@70027)
+	EraseJournalEntry(@70028)
+	EraseJournalEntry(@70029)
+	EraseJournalEntry(@70030)
+	EraseJournalEntry(@70031)
+	EraseJournalEntry(@70032)
+	EraseJournalEntry(@70033)
+	EraseJournalEntry(@70034)
+	EraseJournalEntry(@70035)
+	AddJournalEntry(@70015,QUEST_DONE)
+	SetGlobal("NQ#GOBLINCREW","GLOBAL",50)
+END
+
+// Gespräch
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",1)
+  Dead("NEROGDOK")
+  See("NQ#SHUK")
+  !StateCheck(Lastseenby(Myself),STATE_INVISIBLE)
+  !StateCheck(Lastseenby(Myself),STATE_IMPROVEDINVISIBILITY)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Lastseenby(Myself))
+END
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",1)
+  Dead("NEROGDOK")
+  See([PC])
+  !StateCheck(Lastseenby(Myself),STATE_INVISIBLE)
+  !StateCheck(Lastseenby(Myself),STATE_IMPROVEDINVISIBILITY)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Lastseenby(Myself))
+END
+
+// Angriffe durch andere Goblins unterbinden
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), Attack(Nearestenemyof(Myself))
+END
+
+IF
+  AttackedBy([ENEMY],DEFAULT)
+  Allegiance(Myself,ENEMY)
+  See(Nearestenemyof(Myself))
+THEN
+  RESPONSE #100
+    ActionOverride(Lastattackerof(Myself), NoAction())
+END
+  
+// Kampf
+
+IF
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  StateCheck(Myself,STATE_POISONED)
+  HaveSpell(CLERIC_SLOW_POISON)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_SLOW_POISON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_CALL_LIGHTNING)
+  AreaType(OUTDOOR)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_CALL_LIGHTNING)
+END
+
+IF
+  HaveSpell(CLERIC_CURE_LIGHT_WOUNDS)
+  HPPercentLT(Myself,60)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_CURE_LIGHT_WOUNDS)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_ENTANGLE)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !GlobalTimerNotExpired("BD_Entg","LOCALS")
+  !CheckStatGT(Lastseenby(Myself),0,ENTANGLE)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    SetGlobalTimer("BD_Entg","LOCALS",THREE_ROUNDS)
+    Spell(Lastseenby(Myself),CLERIC_ENTANGLE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_BLESS)
+  !StateCheck(Lastseenby(Myself),STATE_BLESS)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_BLESS)
+END
+
+IF
+  See([EVILCUTOFF])
+  StateCheck(Lastseenby(Myself),STATE_POISONED)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !StateCheck(Lastseenby(Myself),STATE_IMPROVEDINVISIBILITY)
+  !StateCheck(Lastseenby(Myself),STATE_CONFUSED)
+  !StateCheck(Lastseenby(Myself),STATE_CHARMED)
+  !CheckStatGT(Lastseenby(Myself),0,WIZARD_SPELL_DEFLECTION)
+  HaveSpell(CLERIC_SLOW_POISON)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_SLOW_POISON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  !GlobalTimerNotExpired("BD_Doom","LOCALS")
+  HaveSpell(CLERIC_DOOM)
+  !StateCheck(Lastseenby(Myself),STATE_NOT_TARGETABLE)
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE)
+  !StateCheck(Myself,STATE_SILENCED)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    SetGlobalTimer("BD_Doom","LOCALS",THREE_ROUNDS)
+    Spell(Lastseenby(Myself),CLERIC_DOOM)
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  HaveSpell(CLERIC_CHARM_PERSON)
+  !GlobalTimerNotExpired("BD_Cast","LOCALS")
+  CheckStatLT(Myself,50,SPELLFAILUREPRIEST)
+  !StateCheck(Myself,STATE_SILENCED)
+  !CheckStatGT(Myself,0,CLERIC_INSECT_PLAGUE) 
+  !Race(Lastseenby(Myself),ELF)
+  !StateCheck(Lastseenby(Myself),STATE_NOT_TARGETABLE)
+  !StateCheck(Lastseenby(Myself),STATE_DISABLED)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("BD_Cast","LOCALS",ONE_ROUND)
+    Spell(Lastseenby(Myself),CLERIC_CHARM_PERSON)
+    SetInterrupt(TRUE)
+END
+
+IF
+  StateCheck(Myself,STATE_PANIC)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  Heard([0],111)
+THEN
+  RESPONSE #100
+    MoveToObject(Nearestenemyof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  InWeaponRange(Lastseenby(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    AttackReevaluate(Nearestenemyof(Myself),30)
+END
+
+IF
+  AttackedBy([0],DEFAULT)
+  InWeaponRange(Lastattackerof(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    Attack(Lastattackerof(Myself))
+END
+
+IF
+  See(Nearestenemyof(Myself))
+  !HaveSpell(CLERIC_DOOM)
+THEN
+  RESPONSE #100
+    MoveToObject(Lastseenby(Myself))
+END
+
+// NEGOBLIN ohne OH2010
+
+IF
+  Global("NQ#GOBLINCREW","GLOBAL",5)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    IncrementGlobal("GOBLINS_KILLED","GLOBAL",1)
+	ReallyForceSpellDeadRES("NQ#ORI",Myself)							//
+	DestroySelf()
+END
+
+IF
+  Heard([0],911)
+  AreaCheck("OH2000")
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Enemy()
+    Continue()
+END
+
+IF
+  AreaCheck("OH2000")
+  Global("GOBLINS_HOSTILE","OH2000",1)
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Enemy()
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  AreaCheck("OH2000")
+THEN
+  RESPONSE #100
+    SetGlobal("GOBLINS_HOSTILE","OH2000",1)
+    Shout(911)
+    Enemy()
+    Continue()
+END
+
+IF
+  AreaCheck("OH2000")
+  See([ENEMY])
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack([ENEMY])
+END
+

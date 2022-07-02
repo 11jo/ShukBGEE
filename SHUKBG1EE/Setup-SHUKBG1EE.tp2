@@ -1,0 +1,508 @@
+BACKUP ~SHUKBG1EE/backup~
+AUTHOR ~Genwa~
+
+ALWAYS
+
+ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN
+FAIL ~Modmerge is required before mods can be installed on this game. Check the readme for more information and a link to download Modmerge.~
+END
+
+ACTION_IF GAME_IS ~bgt~ THEN BEGIN
+INCLUDE ~SHUKBG1EE/lib/g3_bgt_cpmvars.tpa~
+END
+
+ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+INCLUDE ~SHUKBG1EE/lib/g3_bgee_cpmvars.tpa~
+END
+
+// Area-Patch Funtkion
+
+  DEFINE_ACTION_FUNCTION extend_area_script
+    STR_VAR area=""
+            top=""
+            bottom=""
+			
+    BEGIN
+      COPY_EXISTING "%area%.are" override
+           READ_ASCII 0x94 script
+      BUT_ONLY
+
+      ACTION_IF "%script%" STRING_EQUAL "" BEGIN
+          OUTER_INNER_PATCH_SAVE script "%area%" BEGIN
+                REPLACE_TEXTUALLY "FW" "_AR" // TUTU naming conventions
+          END
+
+          COPY_EXISTING "%area%.are" override
+                WRITE_ASCIIE 0x94 ~%script%~ #8
+      END
+
+      ACTION_IF "%top%" STRING_COMPARE "" BEGIN
+        EXTEND_TOP "%script%.bcs" "%top%" EVALUATE_BUFFER
+      END
+      ACTION_IF "%bottom%" STRING_COMPARE "" BEGIN
+       EXTEND_BOTTOM "%script%.bcs" "%bottom%" EVALUATE_BUFFER
+      END
+    END 
+END
+
+AUTO_TRA ~SHUKBG1EE/translations/%s~
+LANGUAGE ~Deutsche Sprache~
+         ~deutsch~
+         ~SHUKBG1EE/translations/german/Setup-SHUKBG1EE.tra~
+		 ~SHUKBG1EE/translations/german/JOURNAL.tra~
+		 ~SHUKBG1EE/translations/german/SHUK.tra~
+		 ~SHUKBG1EE/translations/german/HEAD.tra~
+	 	 
+BEGIN @0
+
+
+	// 2da
+	
+COPY ~SHUKBG1EE/2da/NQ#GB16.2da~ ~override/NQ#GB16.2da~			// Schamanentanz Vielauge
+	
+	//	areabaf, baldur.baf
+
+LAF extend_area_script STR_VAR area="%FriendlyArmInn_L3%" bottom = ~SHUKBG1EE/areabaf/AR2303.baf~ END
+
+ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+  EXTEND_BOTTOM ~AR0200.bcs~ ~SHUKBG1EE/areabaf/AR0200.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR0225.bcs~ ~SHUKBG1EE/areabaf/AR0225.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR0226.bcs~ ~SHUKBG1EE/areabaf/AR0226.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR1900.bcs~ ~SHUKBG1EE/areabaf/AR1900.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR2300.bcs~ ~SHUKBG1EE/areabaf/AR2300.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR3400.bcs~ ~SHUKBG1EE/areabaf/AR3400.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~OH2000.bcs~ ~SHUKBG1EE/areabaf/OH2000.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~OH2010.bcs~ ~SHUKBG1EE/areabaf/OH2010.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+END
+
+ACTION_IF GAME_IS ~bgt~ THEN BEGIN
+  EXTEND_BOTTOM ~AR8707.bcs~ ~SHUKBG1EE/areabaf/AR1900.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR9300.bcs~ ~SHUKBG1EE/areabaf/AR3400.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+  EXTEND_BOTTOM ~AR6800.bcs~ ~SHUKBG1EE/areabaf/AR2300.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+END
+
+EXTEND_BOTTOM ~baldur.bcs~ ~SHUKBG1EE/areabaf/Lighthouse.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+EXTEND_BOTTOM ~baldur.bcs~ ~SHUKBG1EE/baf/spawnshuk.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+EXTEND_BOTTOM ~bdbaldur.bcs~ ~SHUKBG1EE/baf/spawnshuk.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+EXTEND_BOTTOM ~baldur.bcs~ ~SHUKBG1EE/baf/PALACEGOLD.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+
+EXTEND_BOTTOM ~bdbaldur.bcs~ ~SHUKBG1EE/baf/SLEEP.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+EXTEND_BOTTOM ~baldur.bcs~ ~SHUKBG1EE/baf/SLEEP.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+
+EXTEND_BOTTOM ~dplayer3.bcs~ ~SHUKBG1EE/baf/rested.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+
+	// 	are
+	
+COPY ~SHUKBG1EE/area/NQ#SHU.are~ ~override/NQ#SHU.are~
+
+	// bam
+	
+COPY ~SHUKBG1EE/bam~ ~override~
+
+	//	cre
+	
+COPY ~SHUKBG1EE/cre/NQ#BD13.cre~ ~override/NQ#BD13.cre~			// Toter Bandit
+COPY ~SHUKBG1EE/cre/NQ#DRV0.cre~ ~override/NQ#DRV0.cre~			// Baum
+SAY NAME1 @28
+SAY NAME2 @28
+COPY ~SHUKBG1EE/cre/NQ#BAR1.cre~ ~override/NQ#BAR1.cre~			// Explosives Fass
+SAY NAME1 @43
+SAY NAME2 @43
+COPY ~SHUKBG1EE/cre/NQ#BAR2.cre~ ~override/NQ#BAR2.cre~			// Explosives Fass
+SAY NAME1 @43
+SAY NAME2 @43
+COPY ~SHUKBG1EE/cre/NQ#BAR3.cre~ ~override/NQ#BAR3.cre~			// Fass
+SAY NAME1 @29
+SAY NAME2 @29
+COPY ~SHUKBG1EE/cre/NQ#BAR4.cre~ ~override/NQ#BAR4.cre~			// Fass
+SAY NAME1 @29
+SAY NAME2 @29
+COPY ~SHUKBG1EE/cre/NQ#CA01.cre~ ~override/NQ#CA01.cre~			// Zäher Aaskriecherbulle
+SAY NAME1 @62
+SAY NAME2 @62
+COPY ~SHUKBG1EE/cre/NQ#CHI2.cre~ ~override/NQ#CHI2.cre~			// Verhextes Huhn
+SAY NAME1 @30
+SAY NAME2 @30
+COPY ~SHUKBG1EE/cre/NQ#CHI3.cre~ ~override/NQ#CHI3.cre~			// Schreckenshahn
+SAY NAME1 @31
+SAY NAME2 @31
+COPY ~SHUKBG1EE/cre/NQ#EBR01.cre~ ~override/NQ#EBR01.cre~		// Phaius (Eber)
+SAY NAME1 @14
+SAY NAME2 @14
+COPY ~SHUKBG1EE/cre/NQ#FF10.cre~ ~override/NQ#FF10.cre~			// Söldner der flammenden Faust
+SAY NAME1 @53
+SAY NAME2 @53
+COPY ~SHUKBG1EE/cre/NQ#GB01.cre~ ~override/NQ#GB01.cre~			// Goblin-Krieger
+SAY NAME1 @2
+SAY NAME2 @2
+COPY ~SHUKBG1EE/cre/NQ#GB02.cre~ ~override/NQ#GB02.cre~			// Goblin-Elite
+SAY NAME1 @3
+SAY NAME2 @3
+COPY ~SHUKBG1EE/cre/NQ#GB03.cre~ ~override/NQ#GB03.cre~			// Goblin-Bogenschütze
+SAY NAME1 @4
+SAY NAME2 @4
+COPY ~SHUKBG1EE/cre/NQ#GB04.cre~ ~override/NQ#GB04.cre~			// Goblin-Kommando
+SAY NAME1 @5
+SAY NAME2 @5
+COPY ~SHUKBG1EE/cre/NQ#GB05.cre~ ~override/NQ#GB05.cre~			// Worgreiter
+SAY NAME1 @11
+SAY NAME2 @11
+COPY ~SHUKBG1EE/cre/NQ#GB06.cre~ ~override/NQ#GB06.cre~			// Goblin-Schamane Vielauge
+SAY NAME1 @20
+SAY NAME2 @20
+COPY ~SHUKBG1EE/cre/NQ#GB07.cre~ ~override/NQ#GB07.cre~			// Goblin-Scharfschütze Paek
+SAY NAME1 @21
+SAY NAME2 @21
+COPY ~SHUKBG1EE/cre/NQ#GB08.cre~ ~override/NQ#GB08.cre~			// Goblin-Krieger Raki Nasenschnitzer
+SAY NAME1 @22
+SAY NAME2 @22
+COPY ~SHUKBG1EE/cre/NQ#GB09.cre~ ~override/NQ#GB09.cre~			// Goblin-Krieger Izvo der Koch
+SAY NAME1 @23
+SAY NAME2 @23
+COPY ~SHUKBG1EE/cre/NQ#GB10.cre~ ~override/NQ#GB10.cre~			// Narthag die Ratte
+SAY NAME1 @24
+SAY NAME2 @24
+COPY ~SHUKBG1EE/cre/NQ#GB11.cre~ ~override/NQ#GB11.cre~			// Goblin-Elite Mulm der Schmatzer
+SAY NAME1 @25
+SAY NAME2 @25
+COPY ~SHUKBG1EE/cre/NQ#GB12.cre~ ~override/NQ#GB12.cre~			// Mulms Gesindel
+SAY NAME1 @26
+SAY NAME2 @26
+COPY ~SHUKBG1EE/cre/NQ#GB14.cre~ ~override/NQ#GB14.cre~			// Axtschwinger
+SAY NAME1 @27
+SAY NAME2 @27
+COPY ~SHUKBG1EE/cre/NQ#GB16.cre~ ~override/NQ#GB16.cre~			// Goblin-Schamane Vielauge (Beschworen)
+SAY NAME1 @20
+SAY NAME2 @20
+COPY ~SHUKBG1EE/cre/NQ#GB17.cre~ ~override/NQ#GB17.cre~			// Goblin-Scharfschütze Paek (Beschworen)
+SAY NAME1 @21
+SAY NAME2 @21
+COPY ~SHUKBG1EE/cre/NQ#GB18.cre~ ~override/NQ#GB18.cre~			// Goblin-Krieger Raki Nasenschnitzer (Beschworen)
+SAY NAME1 @22
+SAY NAME2 @22
+COPY ~SHUKBG1EE/cre/NQ#GB21.cre~ ~override/NQ#GB21.cre~			// Goblin-Krieger (Schamane)
+SAY NAME1 @2
+SAY NAME2 @2
+COPY ~SHUKBG1EE/cre/NQ#GB22.cre~ ~override/NQ#GB22.cre~			// Goblin-Elite (Schamane)
+SAY NAME1 @3
+SAY NAME2 @3
+COPY ~SHUKBG1EE/cre/NQ#GB23.cre~ ~override/NQ#GB23.cre~			// Goblin-Kommando (Schamane)
+SAY NAME1 @5
+SAY NAME2 @5
+COPY ~SHUKBG1EE/cre/NQ#GB24.cre~ ~override/NQ#GB24.cre~			// Goblin-Elite
+SAY NAME1 @3
+SAY NAME2 @3
+COPY ~SHUKBG1EE/cre/NQ#GB25.cre~ ~override/NQ#GB25.cre~			// Goblin-Kommando
+SAY NAME1 @5
+SAY NAME2 @5
+COPY ~SHUKBG1EE/cre/NQ#GB26.cre~ ~override/NQ#GB26.cre~			// Kruck
+SAY NAME1 @51
+SAY NAME2 @51
+COPY ~SHUKBG1EE/cre/NQ#GB27.cre~ ~override/NQ#GB27.cre~			// Schleicher
+SAY NAME1 @58
+SAY NAME2 @58
+COPY ~SHUKBG1EE/cre/NQ#GB28.cre~ ~override/NQ#GB28.cre~			// Rastak
+SAY NAME1 @60
+SAY NAME2 @60
+COPY ~SHUKBG1EE/cre/NQ#GB29.cre~ ~override/NQ#GB29.cre~			// Ratte
+COPY ~SHUKBG1EE/cre/NQ#GNL13.cre~ ~override/NQ#GNL13.cre~		// Toter Gnoll
+COPY ~SHUKBG1EE/cre/NQ#MO05.cre~ ~override/NQ#MO05.cre~			// Meister Remen
+SAY NAME1 @45
+SAY NAME2 @45
+COPY ~SHUKBG1EE/cre/NQ#NARTZ.cre~ ~override/NQ#NARTZ.cre~		// Nartz (Goblin-Elite (tot))
+SAY NAME1 @3
+SAY NAME2 @3
+COPY ~SHUKBG1EE/cre/NQ#NESS.cre~ ~override/NQ#NESS.cre~			// Nevin Nessler
+SAY NAME1 @52
+SAY NAME2 @52
+COPY ~SHUKBG1EE/cre/NQ#SALVA.cre~ ~override/NQ#SALVA.cre~		// Salvan Flavinius
+SAY NAME1 @40
+SAY NAME2 @40
+COPY ~SHUKBG1EE/cre/NQ#SPI05.cre~ ~override/NQ#SPI05.cre~		// Flinke Flitzespinne
+SAY NAME1 @34
+SAY NAME2 @34
+COPY ~SHUKBG1EE/cre/NQ#SPI06.cre~ ~override/NQ#SPI06.cre~		// Mutter(spinne)
+SAY NAME1 @35
+SAY NAME2 @35
+COPY ~SHUKBG1EE/cre/NQ#SPY.cre~ ~override/NQ#SPY.cre~			// Unsichtbares Auge
+COPY ~SHUKBG1EE/cre/NQ#SHUK.cre~ ~override/NQ#SHUK.cre~			// Shuk
+SAY NAME1 @1
+SAY NAME2 @1
+COPY ~SHUKBG1EE/cre/NQ#SLIME.cre~ ~override/NQ#SLIME.cre~		// Schleimspur
+COPY ~SHUKBG1EE/cre/NQ#STH1.cre~ ~override/NQ#STH1.cre~			// Amber Lovegold
+SAY NAME1 @42
+SAY NAME2 @42
+COPY ~SHUKBG1EE/cre/NQ#STH2.cre~ ~override/NQ#STH2.cre~			// Leibwächter
+SAY NAME1 @41
+SAY NAME2 @41
+COPY ~SHUKBG1EE/cre/NQ#STH3.cre~ ~override/NQ#STH3.cre~			// Leibwächter
+SAY NAME1 @41
+SAY NAME2 @41
+COPY ~SHUKBG1EE/cre/NQ#TAR.cre~ ~override/NQ#TAR.cre~			// Unsichtbarer
+COPY ~SHUKBG1EE/cre/NQ#WARAS.cre~ ~override/NQ#WARAS.cre~		// Waras
+SAY NAME1 @10
+SAY NAME2 @10
+COPY ~SHUKBG1EE/cre/NQ#WORG1.cre~ ~override/NQ#WORG1.cre~		// Worg
+
+
+	// crebaf
+
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#BAR2.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#BAR4.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#CA01.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#CHI2.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~	
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#CHI3.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~				
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#DRV0.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~	
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#EBR01.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB00.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB06.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB07.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB08.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB09.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB11.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB14.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB16.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB26.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GB27.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#GBSU.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#NESS.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SHUK.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SHUW.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SPI05.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SPI06.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SPY02.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#STAY.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~		// USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#STH1.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#SW1.baf~ USING ~SHUKBG1EE/translations/german/SHUK.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/baf/NQ#WARAS.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+
+EXTEND_TOP ~negoblin.bcs~ ~SHUKBG1EE/baf/negoblin.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+EXTEND_TOP ~WDRUNBE.bcs~ ~SHUKBG1EE/baf/WDRUNBE.baf~ EVALUATE_BUFFER USING ~SHUKBG1EE/translations/german/SHUK.tra~
+
+	// cutscene
+
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/cutscene/NQ#SHC01.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~	
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/cutscene/NQ#SHC02.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/cutscene/NQ#SHC03.baf~ USING ~SHUKBG1EE/translations/german/HEAD.tra~
+
+	// dlg
+
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB06.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB07.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB08.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB09.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB10.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB11.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB26.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB27.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB28.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#NESS.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#SALVA.d~	
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#SHUK.d~  USING ~SHUKBG1EE/translations/german/dlg.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#STH1.d~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#WARAS.d~
+
+	// itm
+
+COPY ~SHUKBG1EE/itm/NQ#AX077.itm~ ~override/NQ#AX077.itm~ 			// Shuks Wurfbeil ("5 Ladungen")
+COPY ~SHUKBG1EE/itm/NQ#AX078.itm~ ~override/NQ#AX078.itm~ 			// Streitaxt (Animation: Goblin-Krieger)
+COPY ~SHUKBG1EE/itm/NQ#AX079.itm~ ~override/NQ#AX079.itm~ 			// Streitaxt (Animation: Goblin-Elite)
+COPY ~SHUKBG1EE/itm/NQ#AX080.itm~ ~override/NQ#AX080.itm~ 			// Streitaxt +1 (Animation: Goblin-Elite)
+COPY ~SHUKBG1EE/itm/NQ#AX081.itm~ ~override/NQ#AX081.itm~ 			// Axe of Kruntur +2 (Animation: Goblin-Elite)
+COPY ~SHUKBG1EE/itm/NQ#AX082.itm~ ~override/NQ#AX082.itm~ 			// Streitaxt von Mauletar +2 (Animation: Goblin-Elite)
+COPY ~SHUKBG1EE/itm/NQ#BAR2.itm~ ~override/NQ#BAR2.itm~				// Explosives Fass
+SAY NAME1 @43
+SAY NAME2 @43
+COPY ~SHUKBG1EE/itm/NQ#BW078.itm~ ~override/NQ#BW078.itm~ 			// Kurzbogen (Animation: Goblin-Bogenschütze)
+COPY ~SHUKBG1EE/itm/NQ#BW079.itm~ ~override/NQ#BW079.itm~ 			// Kurzbogen (Animation: Goblin-Kommando)
+COPY ~SHUKBG1EE/itm/NQ#BW080.itm~ ~override/NQ#BW080.itm~ 			// Kurzbogen +1 (Animation: Goblin-Kommando)
+COPY ~SHUKBG1EE/itm/NQ#CHI2.itm~ ~override/NQ#CHI2.itm~ 			// Verhextes Huhn
+  SAY NAME1 @30
+  SAY NAME2 @30
+COPY ~SHUKBG1EE/itm/NQ#CHI3.itm~ ~override/NQ#CHI3.itm~ 			// Toter Schreckenshahn
+  SAY NAME1 @32
+  SAY NAME2 @32
+  SAY UNIDENTIFIED_DESC @33
+  SAY DESC @33
+COPY ~SHUKBG1EE/itm/NQ#EBR1.itm~ ~override/NQ#EBR1.itm~				// Herz des Ebers
+  SAY NAME1 @15
+  SAY NAME2 @15 
+  SAY UNIDENTIFIED_DESC @16
+  SAY DESC @16
+  
+COPY ~SHUKBG1EE/itm/NQ#HL001.itm~ ~override/NQ#HL001.itm~  			// Helm, unbeweglich  
+  
+COPY ~SHUKBG1EE/itm/NQ#LT001.itm~ ~override/NQ#LT001.itm~  			// Lederwams, unbeweglich
+COPY ~SHUKBG1EE/itm/NQ#LT004.itm~ ~override/NQ#LT004.itm~  			// Beschlagener Lederwams, unbeweglich
+COPY ~SHUKBG1EE/itm/NQ#LT055.itm~ ~override/NQ#LT055.itm~  			// Beschlagener Lederwams +1, unbeweglich
+COPY ~SHUKBG1EE/itm/NQ#LT077.itm~ ~override/NQ#LT077.itm~  			// Telbars beschlagener Lederwams +2, unbeweglich
+
+COPY ~SHUKBG1EE/itm/NQ#LT102.itm~ ~override/NQ#LT102.itm~  			// DS: Goblin Hide Armor +2
+COPY ~SHUKBG1EE/itm/NQ#LT103.itm~ ~override/NQ#LT103.itm~  			// DS: Raconteur's Regalia +2
+COPY ~SHUKBG1EE/itm/NQ#LT104.itm~ ~override/NQ#LT104.itm~  			// DS: Weste des Wechselbalgs
+COPY ~SHUKBG1EE/itm/NQ#LT105.itm~ ~override/NQ#LT105.itm~  			// DS: Grüne Drachenschuppenrüstung
+COPY ~SHUKBG1EE/itm/NQ#LT106.itm~ ~override/NQ#LT106.itm~  			// DS: Goblinleder +1
+COPY ~SHUKBG1EE/itm/NQ#LT107.itm~ ~override/NQ#LT107.itm~  			// DS: Die Umarmung der Nacht +3
+COPY ~SHUKBG1EE/itm/NQ#LT108.itm~ ~override/NQ#LT108.itm~  			// DS: Hide Armor +1
+COPY ~SHUKBG1EE/itm/NQ#LT109.itm~ ~override/NQ#LT109.itm~  			// DS: Jegg's Lederrüstung +2
+COPY ~SHUKBG1EE/itm/NQ#LT110.itm~ ~override/NQ#LT110.itm~  			// DS: Kruntur's Armor +3
+
+COPY ~SHUKBG1EE/itm/NQ#MI43.itm~ ~override/NQ#MI43.itm~				// Proviant
+  SAY NAME1 @9
+  SAY NAME2 @9
+COPY ~SHUKBG1EE/itm/NQ#MI44.itm~ ~override/NQ#MI44.itm~				// Tote Mutterspinne
+  SAY NAME1 @36
+  SAY NAME2 @36
+COPY ~SHUKBG1EE/itm/NQ#MI46.itm~ ~override/NQ#MI46.itm~				// Tote Geisterspinne
+  SAY NAME1 @50
+  SAY NAME2 @50
+COPY ~SHUKBG1EE/itm/NQ#MI47.itm~ ~override/NQ#MI47.itm~				// Kleiner Wurftrank der Flammen
+  SAY NAME1 @54
+  SAY NAME2 @54
+COPY ~SHUKBG1EE/itm/NQ#MI48.itm~ ~override/NQ#MI48.itm~				// Krasser Wurftrank der Flammen
+  SAY NAME1 @55
+  SAY NAME2 @55
+
+COPY ~SHUKBG1EE/itm/NQ#SHUK.itm~ ~override/NQ#SHUK.itm~ 			// Goblinstein
+  SAY NAME1 @6
+  SAY NAME2 @6
+  SAY UNIDENTIFIED_DESC @7
+  SAY DESC @8  
+  
+COPY ~SHUKBG1EE/itm/NQ#SEE.itm~ ~override/NQ#SEE.itm~				// Wizard Eye
+COPY ~SHUKBG1EE/itm/NQ#SPR31.itm~ ~override/NQ#SPR31.itm~			// Worgreiterspeer
+COPY ~SHUKBG1EE/itm/NQ#SD01.itm~ ~override/NQ#SD01.itm~				// Kleiner Schild
+COPY ~SHUKBG1EE/itm/NQ#SD02.itm~ ~override/NQ#SD02.itm~				// Kleiner Schild +1
+COPY ~SHUKBG1EE/itm/NQ#SD02A.itm~ ~override/NQ#SD02A.itm~			// Kleiner Schild +1 (modern)
+COPY ~SHUKBG1EE/itm/NQ#SD04.itm~ ~override/NQ#SD04.itm~				// Mittlerer Schild +1
+COPY ~SHUKBG1EE/itm/NQ#SD04A.itm~ ~override/NQ#SD04A.itm~			// Mittlerer Schild +1 (modern)
+COPY ~SHUKBG1EE/itm/NQ#SD20.itm~ ~override/NQ#SD20.itm~				// Kiels Schild
+COPY ~SHUKBG1EE/itm/NQ#SD28.itm~ ~override/NQ#SD28.itm~				// Kleiner Schild +2
+COPY ~SHUKBG1EE/itm/NQ#SD29.itm~ ~override/NQ#SD29.itm~				// Mittlerer Schild +2
+
+COPY ~SHUKBG1EE/itm/NQ#SH01.itm~ ~override/NQ#SH01.itm~				// Level 1
+COPY ~SHUKBG1EE/itm/NQ#SH02.itm~ ~override/NQ#SH02.itm~				// Level 2
+COPY ~SHUKBG1EE/itm/NQ#SH03.itm~ ~override/NQ#SH03.itm~				// Level 3
+COPY ~SHUKBG1EE/itm/NQ#SH04.itm~ ~override/NQ#SH04.itm~				// Level 4
+COPY ~SHUKBG1EE/itm/NQ#SH05.itm~ ~override/NQ#SH05.itm~				// Level 5
+COPY ~SHUKBG1EE/itm/NQ#SH06.itm~ ~override/NQ#SH06.itm~				// Level 6
+COPY ~SHUKBG1EE/itm/NQ#SH07.itm~ ~override/NQ#SH07.itm~				// Level 7
+COPY ~SHUKBG1EE/itm/NQ#SH08.itm~ ~override/NQ#SH08.itm~				// Level 8
+COPY ~SHUKBG1EE/itm/NQ#SH09.itm~ ~override/NQ#SH09.itm~				// Level 9
+COPY ~SHUKBG1EE/itm/NQ#SH10.itm~ ~override/NQ#SH10.itm~				// Level 10
+
+	// Portrait
+ 
+COPY ~SHUKBG1EE/portrait/NQ#SHUM.bmp~ ~override/NQ#SHUM.bmp~
+ 
+	// spl
+	
+COPY ~SHUKBG1EE/spl/NQ#AX079.spl~ ~override/NQ#AX079.spl~			// Zuweisung: Streitaxt	
+COPY ~SHUKBG1EE/spl/NQ#AX080.spl~ ~override/NQ#AX080.spl~			// Zuweisung: Streitaxt +1
+COPY ~SHUKBG1EE/spl/NQ#AX081.spl~ ~override/NQ#AX081.spl~			// Zuweisung: Axe of Kruntur +2
+COPY ~SHUKBG1EE/spl/NQ#AX082.spl~ ~override/NQ#AX082.spl~			// Zuweisung: Streitaxt von Mauletar +2
+	
+COPY ~SHUKBG1EE/spl/NQ#DRV0.spl~ ~override/NQ#DRV0.spl~				// Eingangszauber Baumhirte
+COPY ~SHUKBG1EE/spl/NQ#DRV1.spl~ ~override/NQ#DRV1.spl~				// Verstricken (Bei Treffer)
+COPY ~SHUKBG1EE/spl/NQ#EBR1A.spl~ ~override/NQ#EBR1A.spl~			// Kraft des Ebers	
+  SAY NAME1 @17
+  SAY NAME2 @17
+COPY ~SHUKBG1EE/spl/NQ#EBR1B.spl~ ~override/NQ#EBR1B.spl~			// Schrei des Ebers	
+  SAY NAME1 @18
+  SAY NAME2 @18
+COPY ~SHUKBG1EE/spl/NQ#EBR1C.spl~ ~override/NQ#EBR1C.spl~			// Letzter Wille
+  SAY NAME1 @19
+  SAY NAME2 @19
+
+COPY ~SHUKBG1EE/spl/NQ#GB16.spl~ ~override/NQ#GB16.spl~				// Schamanentanz (Vielauge)
+COPY ~SHUKBG1EE/spl/NQ#GB28.spl~ ~override/NQ#GB28.spl~				// Schamanentanz (Rastak)
+
+COPY ~SHUKBG1EE/spl/NQ#G271.spl~ ~override/NQ#G271.spl~				// Schattensprung (Schleicher)
+  SAY NAME1 @59
+  SAY NAME2 @59
+  
+COPY ~SHUKBG1EE/spl/NQ#HL01.spl~ ~override/NQ#HL01.spl~				// Zuweisung: Helm
+  
+COPY ~SHUKBG1EE/spl/NQ#HP05.spl~ ~override/NQ#HP05.spl~				// + 5 HP
+COPY ~SHUKBG1EE/spl/NQ#HP10.spl~ ~override/NQ#HP10.spl~				// + 10 HP
+COPY ~SHUKBG1EE/spl/NQ#HP15.spl~ ~override/NQ#HP15.spl~				// + 15 HP
+
+COPY ~SHUKBG1EE/spl/NQ#LT01.spl~ ~override/NQ#LT01.spl~				// Zuweisung: Lederwams
+COPY ~SHUKBG1EE/spl/NQ#LT04.spl~ ~override/NQ#LT04.spl~				// Zuweisung: Beschlagener Lederwams 
+COPY ~SHUKBG1EE/spl/NQ#LT05.spl~ ~override/NQ#LT05.spl~				// Zuweisung: Beschlagener Lederwams +1
+COPY ~SHUKBG1EE/spl/NQ#LT07.spl~ ~override/NQ#LT07.spl~				// Zuweisung: Beschlagener Lederwams +2
+ 
+COPY ~SHUKBG1EE/spl/NQ#LT102.spl~ ~override/NQ#LT102.spl~  			// Zuweisung: DS: Goblin Hide Armor +2
+COPY ~SHUKBG1EE/spl/NQ#LT103.spl~ ~override/NQ#LT103.spl~  			// Zuweisung: DS: Raconteurs Regalia +2
+COPY ~SHUKBG1EE/spl/NQ#LT104.spl~ ~override/NQ#LT104.spl~  			// Zuweisung: DS: Weste des Wechselbalgs
+COPY ~SHUKBG1EE/spl/NQ#LT105.spl~ ~override/NQ#LT105.spl~  			// Zuweisung: DS: Dragonscale Armor
+COPY ~SHUKBG1EE/spl/NQ#LT106.spl~ ~override/NQ#LT106.spl~  			// Zuweisung: DS: Goblinleder +1
+COPY ~SHUKBG1EE/spl/NQ#LT107.spl~ ~override/NQ#LT107.spl~  			// Zuweisung: DS: Umarmung der Nacht +3
+COPY ~SHUKBG1EE/spl/NQ#LT108.spl~ ~override/NQ#LT108.spl~  			// Zuweisung: DS: Hide Armor +1
+COPY ~SHUKBG1EE/spl/NQ#LT109.spl~ ~override/NQ#LT109.spl~  			// Zuweisung: DS: Jeggs Leder +2
+COPY ~SHUKBG1EE/spl/NQ#LT110.spl~ ~override/NQ#LT110.spl~  			// Zuweisung: DS: Kruntur's Rüstung +3
+
+COPY ~SHUKBG1EE/spl/NQ#MI48.spl~ ~override/NQ#MI48.spl~  			// Zuweisung: Krasser Wurftrank
+
+COPY ~SHUKBG1EE/spl/NQ#NESS1.spl~ ~override/NQ#NESS1.spl~  			// Stinkende Wolke (Nesslers Eimer)
+
+COPY ~SHUKBG1EE/spl/NQ#ORH.spl~ ~override/NQ#ORH.spl~  				// Animation Skill (momentan notwendig für spawn!)
+
+COPY ~SHUKBG1EE/spl/NQ#REST2.spl~ ~override/NQ#REST2.spl~			// Rast / Heilung
+
+COPY ~SHUKBG1EE/spl/NQ#SCRE.spl~ ~override/NQ#SCRE.spl~				// Goblincrew rufen
+  SAY NAME1 @39
+  SAY NAME2 @39 
+COPY ~SHUKBG1EE/spl/NQ#SCRF.spl~ ~override/NQ#SCRF.spl~				// Goblincrew rufen lernen
+
+COPY ~SHUKBG1EE/spl/NQ#SHUK.spl~ ~override/NQ#SHUK.spl~				// Beschwörung Shuk
+COPY ~SHUKBG1EE/spl/NQ#SHPO.spl~ ~override/NQ#SHPO.spl~				// Gift verlangsamen ohne magische Effekte
+COPY ~SHUKBG1EE/spl/NQ#SHGI.spl~ ~override/NQ#SHGI.spl~				// Waffe vergiften lernen
+COPY ~SHUKBG1EE/spl/NQ#TIRE.spl~ ~override/NQ#TIRE.spl~				// Müdigkeit
+COPY ~SHUKBG1EE/spl/NQ#WR1.spl~ ~override/NQ#WR1.spl~				// Worgreiter lernen
+COPY ~SHUKBG1EE/spl/NQ#WR2.spl~ ~override/NQ#WR2.spl~				// Worgreiter
+  SAY NAME1 @11
+  SAY NAME2 @11 
+COPY ~SHUKBG1EE/spl/NQ#WR3.spl~ ~override/NQ#WR3.spl~				// Worgritt beenden
+  SAY NAME1 @12
+  SAY NAME2 @12 
+
+COPY ~SHUKBG1EE/spl/NQ#SD01.spl~ ~override/NQ#SD01.spl~				// Zuweisung: Kleiner Schild
+COPY ~SHUKBG1EE/spl/NQ#SD02.spl~ ~override/NQ#SD02.spl~				// Zuweisung: Kleiner Schild +1
+COPY ~SHUKBG1EE/spl/NQ#SD02A.spl~ ~override/NQ#SD02A.spl~			// Zuweisung: Kleiner Schild +1 (modern)
+COPY ~SHUKBG1EE/spl/NQ#SD04.spl~ ~override/NQ#SD04.spl~				// Zuweisung: Mittlerer Schild +1
+COPY ~SHUKBG1EE/spl/NQ#SD04A.spl~ ~override/NQ#SD04A.spl~			// Zuweisung: Mittlerer Schild +1 (modern)
+COPY ~SHUKBG1EE/spl/NQ#SD20.spl~ ~override/NQ#SD20.spl~				// Zuweisung: Kiels Schild
+COPY ~SHUKBG1EE/spl/NQ#SD28.spl~ ~override/NQ#SD28.spl~				// Zuweisung: Kleiner Schild +2
+COPY ~SHUKBG1EE/spl/NQ#SD29.spl~ ~override/NQ#SD29.spl~				// Zuweisung: Mittlerer Schild +2
+
+COPY ~SHUKBG1EE/spl/NQ#SJP0.spl~ ~override/NQ#SJP0.spl~				// Steinsprung
+COPY ~SHUKBG1EE/spl/NQ#SJP.spl~ ~override/NQ#SJP.spl~				// Steinsprung
+  SAY NAME1 @13
+  SAY NAME2 @13
+COPY ~SHUKBG1EE/spl/NQ#SLVL.spl~ ~override/NQ#SLVL.spl~				// Shuk: Levelaufstieg
+COPY ~SHUKBG1EE/spl/NQ#SPI6A.spl~ ~override/NQ#SPI6A.spl~			// Mutterspinne: Aussaugen
+  SAY NAME1 @37
+  SAY NAME2 @37
+COPY ~SHUKBG1EE/spl/NQ#SPI6B.spl~ ~override/NQ#SPI6B.spl~			// Mutterspinne: Leiche verschlingen
+  SAY NAME1 @38
+  SAY NAME2 @38
+COPY ~SHUKBG1EE/spl/NQ#TNT.spl~ ~override/NQ#TNT.spl~				// Explosion
+  SAY NAME1 @44
+  SAY NAME2 @44
+
+	// sto  
+	
+COPY ~SHUKBG1EE/sto/NQ#GB28A.sto~ ~override/NQ#GB28A.sto~
+  SAY NAME2 @61 
+COPY ~SHUKBG1EE/sto/NQ#GB28B.sto~ ~override/NQ#GB28B.sto~
+  SAY NAME2 @60 
+  
+	// journal EE
+	
+ADD_JOURNAL EXISTING TITLE (~Landrins Habseligkeiten~) @70001 @70002 USING ~SHUKBG1EE/translations/german/Journal.tra~
+
+ADD_JOURNAL @70003 @70004 @70005 @70006 @70007 @70008 @70009 @70010 @70011 @70012 @70013 @70014 @70015 @70016 @70017 @70018 @70019 @70020 @70022 @70023 @70024 @70025 @70026 @70027 @70028 @70029 @70030 @70031 @70032 @70033 @70034 @70035 @70036 @70037 @70038 @70039 @70040 @70041 @70042 @70043 @70044 @70045 @70046 @70047 @70048 @70049 @70050 @70051 @70052 USING ~SHUKBG1EE\translations\german\Journal.tra~
+	
+
+

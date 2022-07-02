@@ -1,0 +1,100 @@
+IF
+  Die()
+  Global("IDIE","GLOBAL",0)
+THEN
+  RESPONSE #100
+    AddexperienceParty(70)
+	SetGlobal("IDIE","GLOBAL",1)
+END
+
+IF
+  !AreaCheck("OH2010")
+THEN
+  RESPONSE #100
+    EscapeAreaMove("OH2010",894,1250,0)
+END
+
+IF
+  AreaCheck("OH2010")
+  See([0])
+  OR(3)
+  Race(Lastseenby(Myself),goblin)
+  Race(Lastseenby(Myself),kobold)
+  Race(Lastseenby(Myself),hobgoblin)
+THEN
+  RESPONSE #100
+    AttackReevaluate(Lastseenby(Myself),30)
+END
+
+IF
+  !See(Nearestenemyof(Myself))
+  !InActiveArea(Player1)
+  !InActiveArea(Player2)
+  !InActiveArea(Player3)
+  !InActiveArea(Player4)
+  !InActiveArea(Player5)
+  !InActiveArea(Player6)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player1)
+  AreaCheck("OH2010")
+  InActiveArea(Player1)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player2)
+  AreaCheck("OH2010")
+  InActiveArea(Player2)
+THEN
+  RESPONSE #100
+    MoveToObject(Player2)
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player3)
+  AreaCheck("OH2010")
+  InActiveArea(Player3)
+THEN
+  RESPONSE #100
+    MoveToObject(Player3)
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player4)
+  AreaCheck("OH2010")
+  InActiveArea(Player4)
+THEN
+  RESPONSE #100
+    MoveToObject(Player4)
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player5)
+  AreaCheck("OH2010")
+  InActiveArea(Player5)
+THEN
+  RESPONSE #100
+    MoveToObject(Player5)
+END
+
+IF
+  !Detect(Nearestenemyof(Myself))
+  HasItem("NQ#CHI2",Player6)
+  AreaCheck("OH2010")
+  InActiveArea(Player6)
+THEN
+  RESPONSE #100
+    MoveToObject(Player6)
+END

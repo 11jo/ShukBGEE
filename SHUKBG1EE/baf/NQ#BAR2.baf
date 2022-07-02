@@ -1,0 +1,62 @@
+IF
+   HitBy([ANYTHING],FIRE)
+   Global("TNT","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TNT","LOCALS",1)
+	DisplayStringHead(Myself,@8903)				// 		3
+	SetGlobalTimer("TNTSTART","LOCALS",2)
+END
+
+
+IF
+  GlobalTimerExpired("TNTSTART","LOCALS")
+  Global("TNT","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("TNT","LOCALS",2)
+	DisplayStringHead(Myself,@8902)				// 		2
+	SetGlobalTimer("TNTSTART","LOCALS",2)
+END
+
+IF
+  GlobalTimerExpired("TNTSTART","LOCALS")
+  Global("TNT","LOCALS",2)
+THEN
+  RESPONSE #100
+    SetGlobal("TNT","LOCALS",3)
+	DisplayStringHead(Myself,@8901)				// 		1
+	SetGlobalTimer("TNTSTART","LOCALS",2)
+END
+
+IF
+  GlobalTimerExpired("TNTSTART","LOCALS")
+  Global("TNT","LOCALS",3)
+THEN
+  RESPONSE #100
+    SetGlobal("TNT","LOCALS",4)
+	DisplayStringHead(Myself,@8900)				// 		0
+	ReallyForceSpellRES("NQ#TNT",Myself)
+	Kill(Myself)
+END
+
+IF
+  GlobalGT("TNT","LOCALS",0)
+  HPLT(Myself,2)
+  !Global("TNT","LOCALS",4)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	SetGlobal("TNT","LOCALS",4)
+    ReallyForceSpellRES("NQ#TNT",Myself)
+	Kill(Myself)
+END
+
+IF
+  Global("TNT","LOCALS",0)
+  HPLT(Myself,2)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+	Kill(Myself)
+END
