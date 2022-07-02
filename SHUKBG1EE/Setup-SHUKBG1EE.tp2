@@ -4,7 +4,7 @@ AUTHOR ~Genwa~
 ALWAYS
 
 ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN
-FAIL ~Modmerge is required before mods can be installed on this game. Check the readme for more information and a link to download Modmerge.~
+FAIL @63
 END
 
 ACTION_IF GAME_IS ~bgt~ THEN BEGIN
@@ -52,6 +52,43 @@ LANGUAGE ~Deutsche Sprache~
 		 ~SHUKBG1EE/translations/german/JOURNAL.tra~
 		 ~SHUKBG1EE/translations/german/SHUK.tra~
 		 ~SHUKBG1EE/translations/german/HEAD.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB06.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB07.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB08.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB09.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB10.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB11.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB26.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB27.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB28.tra~
+		 ~SHUKBG1EE/translations/german/NQ#NESS.tra~
+		 ~SHUKBG1EE/translations/german/NNQ#SALVA.tra~
+		 ~SHUKBG1EE/translations/german/NQ#STH1.tra~
+		 ~SHUKBG1EE/translations/german/NQ#WARAS.tra~
+LANGUAGE ~Francais~
+         ~french~
+		 ~SHUKBG1EE/translations/german/Setup-SHUKBG1EE.tra~
+		 ~SHUKBG1EE/translations/german/JOURNAL.tra~
+		 ~SHUKBG1EE/translations/german/SHUK.tra~
+		 ~SHUKBG1EE/translations/german/HEAD.tra~
+		 ~SHUKBG1EE/translations/german/HEAD.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB06.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB07.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB08.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB09.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB10.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB11.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB26.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB27.tra~
+		 ~SHUKBG1EE/translations/german/NQ#GB28.tra~
+		 ~SHUKBG1EE/translations/german/NQ#NESS.tra~
+		 ~SHUKBG1EE/translations/german/NNQ#SALVA.tra~
+		 ~SHUKBG1EE/translations/german/NQ#STH1.tra~
+		 ~SHUKBG1EE/translations/german/NQ#WARAS.tra~
+         ~SHUKBG1EE/translations/french/Setup-SHUKBG1EE.tra~
+		 ~SHUKBG1EE/translations/french/JOURNAL.tra~
+		 ~SHUKBG1EE/translations/french/SHUK.tra~
+		 ~SHUKBG1EE/translations/french/HEAD.tra~
 	 	 
 BEGIN @0
 
@@ -298,7 +335,7 @@ COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB27.d~
 COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#GB28.d~
 COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#NESS.d~
 COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#SALVA.d~	
-COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#SHUK.d~  USING ~SHUKBG1EE/translations/german/dlg.tra~
+COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/SHUK.d~  USING ~SHUKBG1EE/translations/german/dlg.tra~
 COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#STH1.d~
 COMPILE EVALUATE_BUFFER ~SHUKBG1EE/dlg/NQ#WARAS.d~
 
@@ -500,7 +537,7 @@ COPY ~SHUKBG1EE/sto/NQ#GB28B.sto~ ~override/NQ#GB28B.sto~
   
 	// journal EE
 	
-ADD_JOURNAL EXISTING TITLE (~Landrins Habseligkeiten~) @70001 @70002 USING ~SHUKBG1EE/translations/german/Journal.tra~
+ADD_JOURNAL EXISTING TITLE (@70053) @70001 @70002 USING ~SHUKBG1EE/translations/german/Journal.tra~
 
 ADD_JOURNAL @70003 @70004 @70005 @70006 @70007 @70008 @70009 @70010 @70011 @70012 @70013 @70014 @70015 @70016 @70017 @70018 @70019 @70020 @70022 @70023 @70024 @70025 @70026 @70027 @70028 @70029 @70030 @70031 @70032 @70033 @70034 @70035 @70036 @70037 @70038 @70039 @70040 @70041 @70042 @70043 @70044 @70045 @70046 @70047 @70048 @70049 @70050 @70051 @70052 USING ~SHUKBG1EE\translations\german\Journal.tra~
 	

@@ -1,4 +1,6 @@
-# ShukBGEE WIP "Traification" and "French translation"
+# ShukBGEE				 WIP
+
+#		  "Traification" and "French translation"
 
 
 [A Kerzenburgforum Mod](https://www.baldurs-gate.de/index.php/)

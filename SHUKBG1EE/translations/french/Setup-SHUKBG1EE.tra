@@ -1,0 +1,75 @@
+@0 = ~Mod de Shuk le gobelin - V 1.0~
+@1 = ~Shuk~
+@2 = ~Guerrier gobelin~
+@3 = ~Gobelin d’Élite~
+@4 = ~Archer gobelin~
+@5 = ~Commando gobelin~
+@6 = ~Pierre à gobelin~
+@7 = ~Description Pierre à gobelin 1~
+@8 = ~Cet artefact à l'air anodin ressemble en apparence à une opale noire de forme irrégulière. Si vous tenez la pierre un instant, vous pouvez sentir les courants d'énergie chaotique qui la traversent. Si vous vous concentrez davantage, vous pouvez relier ces énergies entre elles et former une sorte de portail. Aucun de vos compagnons n'arrive à établir de lien avec la pierre et leurs tentatives éloigne les courants d'énergie les uns des autres. La magie de la pierre reste un mystère et ne semble pas être uniquement d'origine arcanique. Tant que vous n'en saurez pas plus, utiliser cette pierre comportera de grands risques.
+
+PROPRIÉTÉS :
+
+Ouvre un portail vers un lieu inconnu (1x par jour).
+
+Poids : 1~
+@9 = ~Provisions~
+@10 = ~Waras~
+@11 = ~Cavalier Worg~
+@12 = ~Fini du Cavalier Worg~
+@13 = ~Retour dans la Pierre~
+@14 = ~Phaius~
+@15 = ~Cœur de sanglier~
+@16 = ~C'est le cœur de l'énorme sanglier Phaius. Le muscle ensanglanté ressemble à celui d'un homme, mais il est presque deux fois plus grand et parcouru d'épaisses lignes noires. En regardant son cœur les derniers doutes sur l'origine surnaturelle de Phaius sont levés.
+
+PROPRIÉTÉS :
+
+Poids : 3~
+@17= ~Force du sanglier~
+@18= ~Cri du sanglier~
+@19= ~Dernière volonté~
+@20= ~Vielauge~
+@21= ~Paek~
+@22= ~Raki le découpeur de nez~
+@23= ~Izvo le cuisinier~
+@24= ~Narthag le rat~
+@25= ~Mulm le parasite~
+@26= ~la horde de Mulm~
+@27= ~Combattants à la hache~
+@28= ~Ent ensorcelé~
+@29= ~Tonneau~
+@30= ~Poulet ensorcelé~
+@31= ~Coq terrifiant~
+@32= ~Coq terrifiant mort~
+@33= ~Le cadavre d'un redoutable Coq terrifiant est convoité par les alchimistes et les charlatans de tous les pays.
+
+PROPRIÉTÉS :
+
+Poids : 3~
+@34= ~Araignée rapide~
+@35= ~Mère~
+@36= ~Cadavre de Mère~
+@37= ~Aspirer~
+@38= ~Dévorer le cadavre~
+@39= ~Appeler des renforts gobelins~
+@40= ~Salvan Flavinius~
+@41= ~Garde du corps~
+@42= ~Amber Lovegold~
+@43= ~Tonneau explosif~
+@44= ~Explosion~
+@45= ~Maître Remen~
+@50= ~Cadavre d'Araignée fantôme~
+@51= ~Kruck~
+@52= ~Nelvin Nessler~
+@53= ~Mercenaire du Poing Enflammé~
+@54= ~Petite potion explosive~
+@55= ~Potion explosive~
+@56= ~La petite potion explosive inflige 3d6 points de dégâts de feu à la cible.~
+@57= ~La potion  explosive inflige 5d6 points de dégâts de feu à la cible.~
+@58= ~Pisteur~
+@59= ~Se cacher dans l'ombre~
+@60= ~Rastak~
+@61= ~Canalisation~
+@62= ~Ver charognard supérieur~
+
+@63= ~Ce composant necessite Modmerge ou DLC Merger d'Argent77 avant de pouvoir etre installes sur ce jeu.~

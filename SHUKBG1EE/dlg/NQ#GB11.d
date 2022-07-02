@@ -12,21 +12,21 @@ BEGIN NQ#GB11
 
 
 IF ~See("NQ#SHUK") !StateCheck("NQ#SHUK",CD_STATE_NOTVALID)~ THEN BEGIN 0
-SAY ~Halt! Wer... Ihr seid Shuk? Hab von Euch gehört. Was wollt ihr?~
+SAY @0 /* Halt! Wer... Ihr seid Shuk? Hab von Euch gehört. Was wollt ihr? */
 IF ~~ THEN EXTERN ~NQ#SHUK~ 13
 END
 
 IF ~~ THEN BEGIN 1
-SAY ~Was...? Hat Paek Euch geschickt? Die diebische Krötin hat unser Gold gestohlen! Wir...~
+SAY @1 /* Was...? Hat Paek Euch geschickt? Die diebische Krötin hat unser Gold gestohlen! Wir... */
 IF ~~ THEN DO ~Enemy()~ EXTERN ~NQ#SHUK~ 14
 END
 
 IF ~Global("NQ#GOBLINCREW","GLOBAL",50)~ THEN BEGIN LOSE
-SAY ~*Rülps!*~
+SAY @2 /* *Rülps!* */
 IF ~~ THEN EXIT
 END
 
 IF ~OR(2) !See("NQ#SHUK") StateCheck("NQ#SHUK",CD_STATE_NOTVALID)~ THEN BEGIN 2
-SAY ~*Rülps!*~
+SAY @2 /* *Rülps!* */
 IF ~~ THEN EXIT
 END
